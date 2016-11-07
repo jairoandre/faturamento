@@ -108,6 +108,14 @@ faturamentoRow idx elem =
         div [ class rowClass ] [ text <| toString <| elem ]
 
 
+customDiv : String -> String -> Html Msg -> Html Msg
+customDiv wrapperClass innerClass elem =
+    div [ class wrapperClass ]
+        [ div [ class innerClass ]
+            [ elem ]
+        ]
+
+
 faturamentoView : Model -> Html Msg
 faturamentoView model =
     let
@@ -122,8 +130,8 @@ faturamentoView model =
                     , div [ class "header--date" ] [ text "07/11/2016" ]
                     ]
                 , div [ class "header--wrapper--bottom" ]
-                    [ div [ class "header--column header--convenio" ] [ text "CONVÊNIO" ]
-                    , div [ class "header--column header--quantidade" ] [ text "QTD." ]
+                    [ customDiv "header--column header--convenio" "header--inner" (text "CONVÊNIO")
+                    , customDiv "header--column header--quantidade" "header--inner" (text "QUANTIDADE")
                     ]
                 ]
             , div [ class "content--wrapper" ]
