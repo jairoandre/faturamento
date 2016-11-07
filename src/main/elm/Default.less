@@ -13,3 +13,126 @@ body {
   width: @width;
   height: @height;
 }
+
+@headerHeight: 75px;
+
+.header--wrapper {
+	position: absolute;
+	width: @width;
+	height: headerHeight;
+	background-color: #666;
+	line-height: 75px;
+	font-size: 75px;
+	color: #777;
+	text-align: center;
+}
+
+@headerTopHeight: 40px;
+
+.header--wrapper--top {
+	position: absolute;
+	width: @width;
+	height:  @headerTopHeight;
+	line-height: @headerTopHeight;
+	text-align: center;
+	font-size: 30px;
+}
+
+@logoWidth: 0.15 * @width;
+
+.header--logo {
+	position: absolute;
+	width: @logoWidth;
+}
+
+.header--logo img {
+	width: 0.10 * @width;
+}
+
+@headerTitleOffset: @logoWidth;
+@headerTitleIWidth: 0.7 * @width;
+
+.header--title {
+	position: absolute;
+	width: @headerTitleIWidth;
+	left: @headerTitleOffset;
+	background: #0a005d;
+	color: #fff;
+}
+
+@headerDateOffset: @headerTitleOffset + @headerTitleIWidth;
+@headerDateWidth: 0.15 * @width;
+
+.header--date {
+	position: absolute;
+	width: @headerDateWidth;
+	left: @headerDateOffset;
+}
+
+@headerBottomHeight: 35px;
+
+.header--wrapper--bottom {
+	position: absolute;
+	width: @width;
+	height: @headerBottomHeight;
+	top: @headerTopHeight;
+	background: #3779d0;
+}
+
+.header--column {
+	position: absolute;
+	line-height: @headerBottomHeight;
+	color: #fff;
+	font-size: 15px;
+	text-align: left;
+}
+
+@convenioWidth: 200px;
+
+.header--convenio {
+	width: @convenioWidth;
+	border-right: 1px solid #fff;
+}
+
+@quantidadeWidth: 75px;
+@quantidadeLeft: @convenioWidth;
+
+.header--quantidade {
+	width: @quantidadeWidth;
+	left: @quantidadeLeft;
+}
+
+
+@contentHeight: @height - @headerHeight;
+@contentTop: @headerHeight;
+
+.content--wrapper {
+	position: absolute;
+	width: @width;
+	height: @contentHeight;
+	top: @contentTop;
+	background: #e0ff78;
+}
+
+@rowHeight: 50px;
+
+.row--wrapper {
+	position: absolute;
+	width: @width;
+	height: @rowHeight;
+}
+
+.row--wrapper--zebra {
+	background: #fadb6d;
+}
+
+.rowLoop(11);
+
+.rowLoop (@n, @i: 0) when (@i =< @n) {
+	.row--wrapper--@{i} {
+		top: @i * @rowHeight;
+	}
+	.rowLoop(@n, (@i + 1));
+}
+
+// CABEÇALHO
