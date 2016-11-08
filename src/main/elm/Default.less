@@ -20,7 +20,6 @@ body {
 	position: absolute;
 	width: @width;
 	height: headerHeight;
-	background-color: #666;
 	line-height: 75px;
 	font-size: 75px;
 	color: #777;
@@ -87,14 +86,18 @@ body {
 	text-align: left;
 }
 
-@convenioWidth: 200px;
-
-.header--convenio {
-	width: @convenioWidth;
+.header--inner {
+	padding-left: 5px;
 	border-right: 1px solid #fff;
 }
 
-@quantidadeWidth: 75px;
+@convenioWidth: 300px;
+
+.header--convenio {
+	width: @convenioWidth;
+}
+
+@quantidadeWidth: 100px;
 @quantidadeLeft: @convenioWidth;
 
 .header--quantidade {
@@ -102,6 +105,15 @@ body {
 	left: @quantidadeLeft;
 }
 
+@tempoMedioWidth: 100px;
+@tempoMedioLeft: @quantidadeWidth + @quantidadeLeft;
+.header--tempoMedio {
+	width: @tempoMedioWidth;
+	left: @tempoMedioLeft;
+}
+
+
+// CONTENT
 
 @contentHeight: @height - @headerHeight;
 @contentTop: @headerHeight;
@@ -111,7 +123,6 @@ body {
 	width: @width;
 	height: @contentHeight;
 	top: @contentTop;
-	background: #e0ff78;
 }
 
 @rowHeight: 50px;
@@ -120,10 +131,15 @@ body {
 	position: absolute;
 	width: @width;
 	height: @rowHeight;
+	line-height: @rowHeight;
+}
+
+.row--inner--padding {
+	padding: 5px;
 }
 
 .row--wrapper--zebra {
-	background: #fadb6d;
+	background: #cff9ff;
 }
 
 .rowLoop(11);

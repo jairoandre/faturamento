@@ -126,12 +126,13 @@ faturamentoView model =
             [ div [ class "header--wrapper" ]
                 [ div [ class "header--wrapper--top" ]
                     [ div [ class "header--logo" ] [ img [ src "http://10.1.0.105:8080/painel/assets/imgs/logo.png" ] [] ]
-                    , div [ class "header--title" ] [ text "TÍTULO" ]
+                    , div [ class "header--title" ] [ text "TEMPO MÉDIO P/ CONV." ]
                     , div [ class "header--date" ] [ text "07/11/2016" ]
                     ]
                 , div [ class "header--wrapper--bottom" ]
                     [ customDiv "header--column header--convenio" "header--inner" (text "CONVÊNIO")
-                    , customDiv "header--column header--quantidade" "header--inner" (text "QUANTIDADE")
+                    , customDiv "header--column header--quantidade" "header--inner" (text "QTD.")
+                    , customDiv "header--column header--tempoMedio" "header--inner" (text "T. MÉDIO")
                     ]
                 ]
             , div [ class "content--wrapper" ]
