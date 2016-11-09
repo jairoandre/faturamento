@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>br.com.vah</groupId>
-  <artifactId>painel</artifactId>
+  <artifactId>faturamento</artifactId>
   <version>0.0.1</version>
   <packaging>war</packaging>
-  <name>painel</name>
+  <name>faturamento</name>
 
   <repositories>
     <repository>
@@ -55,7 +55,7 @@
   </dependencies>
 
   <build>
-    <finalName>painel</finalName>
+    <finalName>faturamento</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
