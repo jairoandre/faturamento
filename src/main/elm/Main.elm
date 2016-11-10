@@ -9,7 +9,8 @@ import String
 import Window
 import Navigation
 import Debug
-import Time exposing (Time)
+import Model.TempoMedio exposing (..)
+import View.TempoMedio exposing (..)
 
 
 main : Program Never
@@ -26,9 +27,8 @@ main =
 
 type alias Model =
     { page : Page
-    , count : Int
+    , tempoMedio : Maybe TempoMedio
     , scale : Float
-    , hue : Float
     , size : Window.Size
     }
 
@@ -40,7 +40,6 @@ type Page
 
 type Msg
     = Resize Size
-    | TickHue Time
 
 
 init : Result String Page -> ( Model, Cmd Msg )
@@ -49,7 +48,7 @@ init result =
         t =
             Debug.log (toString result) 0
     in
-        urlUpdate result (Model Home 0 1 0 { width = 0, height = 0 })
+        urlUpdate result (Model Home (Just mockTempoMedio) 1 { width = 0, height = 0 })
 
 
 urlUpdate : Result String Page -> Model -> ( Model, Cmd Msg )
@@ -93,66 +92,21 @@ pageParser =
         ]
 
 
-faturamentoRow : Int -> Int -> Html Msg
-faturamentoRow idx elem =
-    let
-        topClass =
-            "row--wrapper--" ++ (toString idx)
-
-        rowClass =
-            if idx % 2 == 0 then
-                "row--wrapper row--wrapper--zebra " ++ topClass
-            else
-                "row--wrapper " ++ topClass
-    in
-        div [ class rowClass ] [ text <| toString <| elem ]
-
-
-customDiv : String -> String -> Html Msg -> Html Msg
-customDiv wrapperClass innerClass elem =
-    div [ class wrapperClass ]
-        [ div [ class innerClass ]
-            [ elem ]
-        ]
-
-
-faturamentoView : Model -> Html Msg
-faturamentoView model =
-    let
-        rows =
-            List.indexedMap faturamentoRow [0..11]
-    in
-        div [ class "app--wrapper" ]
-            [ div [ class "header--wrapper" ]
-                [ div [ class "header--wrapper--top" ]
-                    [ div [ class "header--logo" ] [ img [ src "http://10.1.0.105:8080/painel/assets/imgs/logo.png" ] [] ]
-                    , div [ class "header--title" ] [ text "TEMPO MÉDIO P/ CONV." ]
-                    , div [ class "header--date" ] [ text "07/11/2016" ]
-                    ]
-                , div [ class "header--wrapper--bottom" ]
-                    [ customDiv "header--column header--convenio" "header--inner" (text "CONVÊNIO")
-                    , customDiv "header--column header--quantidade" "header--inner" (text "QTD.")
-                    , customDiv "header--column header--tempoMedio" "header--inner" (text "T. MÉDIO")
-                    ]
-                ]
-            , div [ class "content--wrapper" ]
-                rows
-            ]
-
-
 view : Model -> Html Msg
 view model =
     let
-        v =
+        content =
             case model.page of
                 Home ->
                     text (toString model.size)
 
                 Faturamento ->
-                    faturamentoView model
+                    case model.tempoMedio of
+                        Nothing ->
+                            text "Carregando..."
 
-        hsl =
-            (toString <| ceiling <| model.hue) ++ ", 100%, 50%"
+                        Just tm ->
+                            tempoMedioToHtml tm
     in
         div
             [ class "app--wrapper"
@@ -160,7 +114,7 @@ view model =
                 [ ( "transform", "scale(" ++ (toString model.scale) ++ ")" )
                 ]
             ]
-            [ v ]
+            [ content ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -168,16 +122,6 @@ update message model =
     case message of
         Resize newSize ->
             resizeCmd model newSize Cmd.none
-
-        TickHue newTime ->
-            let
-                newHue =
-                    if model.hue < 360 then
-                        model.hue + 1
-                    else
-                        0
-            in
-                ( { model | hue = newHue }, Cmd.none )
 
 
 setScale : Cmd Msg
