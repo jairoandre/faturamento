@@ -20,13 +20,13 @@ body {
 	position: absolute;
 	width: @width;
 	height: headerHeight;
-	line-height: 75px;
-	font-size: 75px;
+	line-height: @headerHeight;
+	font-size: @headerHeight;
 	color: #777;
 	text-align: center;
 }
 
-@headerTopHeight: 40px;
+@headerTopHeight: 50px;
 
 .header--wrapper--top {
 	position: absolute;
@@ -68,7 +68,7 @@ body {
 	left: @headerDateOffset;
 }
 
-@headerBottomHeight: 35px;
+@headerBottomHeight: 25px;
 
 .header--wrapper--bottom {
 	position: absolute;
@@ -82,7 +82,7 @@ body {
 	position: absolute;
 	line-height: @headerBottomHeight;
 	color: #fff;
-	font-size: 15px;
+	font-size: 10px;
 	text-align: left;
 }
 
@@ -91,7 +91,7 @@ body {
 	border-right: 1px solid #fff;
 }
 
-@convenioWidth: 300px;
+@convenioWidth: 250px;
 
 .header--convenio {
 	width: @convenioWidth;
@@ -123,9 +123,12 @@ body {
 	width: @width;
 	height: @contentHeight;
 	top: @contentTop;
+	min-height: 100vh;
+	color: #fff;
+  background-image: linear-gradient(-200deg, #220065 0%, #2b546d 100%);
 }
 
-@rowHeight: 50px;
+@rowHeight: 30px;
 
 .row--wrapper {
 	position: absolute;
@@ -135,14 +138,15 @@ body {
 }
 
 .row--inner--padding {
-	padding: 5px;
+	padding-left: 5px;
 }
 
 .row--wrapper--zebra {
-	background: #cff9ff;
+	background: rgba(1, 4, 85, 0.5);
+
 }
 
-.rowLoop(11);
+.rowLoop(20);
 
 .rowLoop (@n, @i: 0) when (@i =< @n) {
 	.row--wrapper--@{i} {

@@ -6,11 +6,11 @@ import java.util.List;
 /**
  * Created by Jairoportela on 09/11/2016.
  */
-public class ConvenioResult implements Serializable {
+public class TempoMedioItem implements Serializable {
 
   private String version = "0.0.1";
   private String date;
-  private List<ConvenioIndice> indices;
+  private List<TempoMedio> indices;
 
   public String getVersion() {
     return version;
@@ -28,11 +28,11 @@ public class ConvenioResult implements Serializable {
     this.date = date;
   }
 
-  public List<ConvenioIndice> getIndices() {
+  public List<TempoMedio> getIndices() {
     return indices;
   }
 
-  public void setIndices(List<ConvenioIndice> indices) {
+  public void setIndices(List<TempoMedio> indices) {
     this.indices = indices;
   }
 }

@@ -1,4 +1,7 @@
-module Model.TempoMedio exposing (TempoMedio, TempoMedioItem, mockTempoMedio)
+module Model.TempoMedio exposing (TempoMedio, TempoMedioItem, tempoMedioDecoder, mockTempoMedio)
+
+import Json.Decode exposing (Decoder, int, string, list)
+import Json.Decode.Pipeline exposing (decode, optional)
 
 
 type alias TempoMedio =
@@ -8,11 +11,27 @@ type alias TempoMedio =
     }
 
 
+tempoMedioDecoder : Decoder TempoMedio
+tempoMedioDecoder =
+    decode TempoMedio
+        |> optional "date" string ""
+        |> optional "version" string ""
+        |> optional "items" (list tempoMedioItemDecoder) []
+
+
 type alias TempoMedioItem =
     { nome : String
     , quantidade : Int
     , media : Int
     }
+
+
+tempoMedioItemDecoder : Decoder TempoMedioItem
+tempoMedioItemDecoder =
+    decode TempoMedioItem
+        |> optional "nome" string ""
+        |> optional "quantidade" int 0
+        |> optional "media" int -1
 
 
 mockTempoMedio : TempoMedio

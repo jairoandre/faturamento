@@ -10,7 +10,7 @@ tempoMedioToHtml : TempoMedio -> Html a
 tempoMedioToHtml tempoMedio =
     let
         rows =
-            List.indexedMap tempoMedioItemToHtml (List.take 12 tempoMedio.items)
+            List.indexedMap tempoMedioItemToHtml (List.take 20 tempoMedio.items)
     in
         div [ class "app--wrapper" ]
             [ div [ class "header--wrapper" ]
@@ -21,7 +21,7 @@ tempoMedioToHtml tempoMedio =
                     ]
                 , div [ class "header--wrapper--bottom" ]
                     [ customDiv "header--column header--convenio" "header--inner" (text "CONVÊNIO")
-                    , customDiv "header--column header--quantidade" "header--inner" (text "QTD.")
+                    , customDiv "header--column header--quantidade" "header--inner" (text "ABERTAS")
                     , customDiv "header--column header--media" "header--inner" (text "T. MÉDIO")
                     ]
                 ]
