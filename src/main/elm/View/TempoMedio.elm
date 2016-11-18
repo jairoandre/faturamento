@@ -12,17 +12,15 @@ tempoMedioToHtml tempoMedio =
         rows =
             List.indexedMap tempoMedioItemToHtml (List.take 20 tempoMedio.items)
     in
-        div [ class "app--wrapper" ]
+        div [ class "list--wrapper list--wrapper--tempoMedio" ]
             [ div [ class "header--wrapper" ]
                 [ div [ class "header--wrapper--top" ]
-                    [ div [ class "header--logo" ] [ img [ src "http://10.1.0.105:8080/painel/assets/imgs/logo.png" ] [] ]
-                    , div [ class "header--title" ] [ text "TEMPO MÉDIO P/ CONV." ]
-                    , div [ class "header--date" ] [ text tempoMedio.date ]
+                    [ div [ class "header--title header--title--tempoMedio" ] [ text "GUIAS SEM RESPOSTA" ]
                     ]
                 , div [ class "header--wrapper--bottom" ]
-                    [ customDiv "header--column header--convenio" "header--inner" (text "CONVÊNIO")
-                    , customDiv "header--column header--quantidade" "header--inner" (text "ABERTAS")
-                    , customDiv "header--column header--media" "header--inner" (text "T. MÉDIO")
+                    [ customDiv "header--column header--column--convenio" "header--inner" (text "CONVÊNIO")
+                    , customDiv "header--column header--column--quantidade" "header--inner--right" (text "ABERTAS")
+                    , customDiv "header--column header--column--media" "header--inner--right" (text "MÉDIA")
                     ]
                 ]
             , div [ class "content--wrapper" ]
@@ -48,11 +46,11 @@ tempoMedioItemToHtml idx item =
 
         quantidade =
             div [ class "cell cell--quantidade" ]
-                [ div [ class "row--inner--padding" ] [ text <| toString <| item.quantidade ] ]
+                [ div [ class "row--inner--padding--right" ] [ text <| toString <| item.quantidade ] ]
 
         media =
             div [ class "cell cell--media" ]
-                [ div [ class "row--inner--padding" ] [ text <| toString <| item.media ] ]
+                [ div [ class "row--inner--padding--right" ] [ text <| toString <| item.media ] ]
     in
         div [ class rowClass ]
             [ convenio

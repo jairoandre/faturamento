@@ -1,7 +1,10 @@
 package br.com.vah.faturamento.rest;
 
-import br.com.vah.faturamento.dto.ConvenioIndice;
-import br.com.vah.faturamento.dto.ConvenioResult;
+import br.com.vah.faturamento.dto.SemRemessa;
+import br.com.vah.faturamento.dto.SemRemessaItem;
+import br.com.vah.faturamento.dto.TempoMedioItem;
+import br.com.vah.faturamento.dto.TempoMedio;
+import br.com.vah.faturamento.services.SemRemessaSrv;
 import br.com.vah.faturamento.services.TempoMedioSrv;
 
 import javax.inject.Inject;
@@ -21,15 +24,30 @@ public class MainSrv {
   private @Inject
   TempoMedioSrv tempoMedioSrv;
 
+  private @Inject
+  SemRemessaSrv semRemessaSrv;
+
   @GET
-  @Path("/tempoMedioConvenio")
+  @Path("/tempoMedio")
   @Produces("application/json")
-  public ConvenioResult tempoMedioConvenio() {
+  public TempoMedio tempoMedioConvenio() {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    ConvenioResult convenio = new ConvenioResult();
+    TempoMedio convenio = new TempoMedio();
     convenio.setDate(sdf.format(new Date()));
-    List<ConvenioIndice> indices = tempoMedioSrv.recuperarIndices();
-    convenio.setIndices(indices);
+    List<TempoMedioItem> items = tempoMedioSrv.recuperarTempoMedio();
+    convenio.setItems(items);
     return convenio;
+  }
+
+  @GET
+  @Path("/semRemessa")
+  @Produces("application/json")
+  public SemRemessa semRemessa() {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    SemRemessa semRemessa = new SemRemessa();
+    semRemessa.setDate(sdf.format(new Date()));
+    List<SemRemessaItem> items = semRemessaSrv.recuperarContasSemRemessa();
+    semRemessa.setItems(items);
+    return semRemessa;
   }
 }

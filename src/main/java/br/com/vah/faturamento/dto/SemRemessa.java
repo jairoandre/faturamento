@@ -1,16 +1,15 @@
 package br.com.vah.faturamento.dto;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Jairoportela on 09/11/2016.
+ * Created by Jairoportela on 17/11/2016.
  */
-public class TempoMedio implements Serializable {
+public class SemRemessa {
 
-  private String version = "0.0.1";
+  private String version;
   private String date;
-  private List<TempoMedioItem> items;
+  private List<SemRemessaItem> items;
 
   public String getVersion() {
     return version;
@@ -28,11 +27,12 @@ public class TempoMedio implements Serializable {
     this.date = date;
   }
 
-  public List<TempoMedioItem> getItems() {
+  public List<SemRemessaItem> getItems() {
     return items;
   }
 
-  public void setItems(List<TempoMedioItem> items) {
+  public void setItems(List<SemRemessaItem> items) {
     this.items = items;
   }
+
 }

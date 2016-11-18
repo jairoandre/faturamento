@@ -1,38 +1,35 @@
 package br.com.vah.faturamento.dto;
 
-import java.io.Serializable;
-import java.util.List;
-
 /**
- * Created by Jairoportela on 09/11/2016.
+ * Created by Jairoportela on 10/11/2016.
  */
-public class TempoMedioItem implements Serializable {
+public class TempoMedioItem {
 
-  private String version = "0.0.1";
-  private String date;
-  private List<TempoMedio> indices;
+  private String nome;
+  private Integer quantidade;
+  private Integer media;
 
-  public String getVersion() {
-    return version;
+  public String getNome() {
+    return nome;
   }
 
-  public void setVersion(String version) {
-    this.version = version;
+  public void setNome(String nome) {
+    this.nome = nome;
   }
 
-  public String getDate() {
-    return date;
+  public Integer getQuantidade() {
+    return quantidade;
   }
 
-  public void setDate(String date) {
-    this.date = date;
+  public void setQuantidade(Integer quantidade) {
+    this.quantidade = quantidade;
   }
 
-  public List<TempoMedio> getIndices() {
-    return indices;
+  public Integer getMedia() {
+    return media;
   }
 
-  public void setIndices(List<TempoMedio> indices) {
-    this.indices = indices;
+  public void setMedia(Integer media) {
+    this.media = media;
   }
 }

@@ -8,6 +8,10 @@ import Window exposing (Size)
 import Model.TempoMedio exposing (..)
 import View.TempoMedio exposing (..)
 import Api.TempoMedio exposing (getTempoMedio)
+import Model.SemRemessa exposing (..)
+import View.SemRemessa exposing (..)
+import Api.SemRemessa exposing (getSemRemessa)
+import Model.Utils exposing (tickTimer)
 import Navigation
 import String
 import Window
@@ -31,6 +35,7 @@ main =
 type alias Model =
     { page : Page
     , tempoMedio : Maybe TempoMedio
+    , semRemessa : Maybe SemRemessa
     , scale : Float
     , size : Window.Size
     , tick : Int
@@ -47,6 +52,7 @@ type Msg
     | TickTime Time
     | FetchFail Http.Error
     | FetchSuccessTempoMedio TempoMedio
+    | FetchSuccessSemRemessa SemRemessa
 
 
 init : Result String Page -> ( Model, Cmd Msg )
@@ -55,7 +61,7 @@ init result =
         t =
             Debug.log (toString result) 0
     in
-        urlUpdate result (Model Home Nothing 1 { width = 0, height = 0 } 0)
+        urlUpdate result (Model Home Nothing Nothing 1 { width = 0, height = 0 } 0)
 
 
 urlUpdate : Result String Page -> Model -> ( Model, Cmd Msg )
@@ -112,12 +118,27 @@ view model =
                     text ("Redirecionando em " ++ (toString (3 - model.tick)) ++ "...")
 
                 Faturamento ->
-                    case model.tempoMedio of
-                        Nothing ->
-                            text "Carregando..."
+                    let
+                        tempoMedio =
+                            case model.tempoMedio of
+                                Nothing ->
+                                    text "Carregando..."
 
-                        Just tm ->
-                            tempoMedioToHtml tm
+                                Just tm ->
+                                    tempoMedioToHtml tm
+
+                        semRemessa =
+                            case model.semRemessa of
+                                Nothing ->
+                                    text "Carregando..."
+
+                                Just sr ->
+                                    semRemessaToHtml sr
+
+                        elems =
+                            [ tempoMedio, semRemessa ]
+                    in
+                        div [] elems
     in
         div
             [ class "app--wrapper"
@@ -152,7 +173,16 @@ update message model =
                         ( { model | tick = 0, page = Faturamento }, Navigation.newUrl (toUrl Faturamento) )
 
                 Faturamento ->
-                    ( model, Cmd.none )
+                    let
+                        newSemRemessa =
+                            case model.semRemessa of
+                                Just semRemessa ->
+                                    Just (tickTimer semRemessa 5 20)
+
+                                Nothing ->
+                                    Nothing
+                    in
+                        ( { model | semRemessa = newSemRemessa }, Cmd.none )
 
         FetchFail e ->
             let
@@ -162,7 +192,10 @@ update message model =
                 ( model, Cmd.none )
 
         FetchSuccessTempoMedio tempoMedio ->
-            ( { model | tempoMedio = Just tempoMedio }, Cmd.none )
+            ( { model | tempoMedio = Just tempoMedio }, fetchSemRemessa )
+
+        FetchSuccessSemRemessa semRemessa ->
+            ( { model | semRemessa = Just semRemessa }, Cmd.none )
 
 
 setScale : Page -> Cmd Msg
@@ -198,3 +231,8 @@ subscriptions model =
 fetchTempoMedio : Cmd Msg
 fetchTempoMedio =
     getTempoMedio FetchFail FetchSuccessTempoMedio
+
+
+fetchSemRemessa : Cmd Msg
+fetchSemRemessa =
+    getSemRemessa FetchFail FetchSuccessSemRemessa
