@@ -21,53 +21,70 @@ public class SemRemessaSrv extends AbstractSrv {
 
   public List<SemRemessaItem> recuperarContasSemRemessa() {
     String sql =
-        "SELECT NM_CONVENIO, STATUS, COUNT(*) QTD, TRUNC(AVG(QTDE_DIAS)) MEDIA_DIAS, " +
-            "  ROUND(AVG(VL_TOTAL_CONTA), 2) MEDIA_VALOR FROM ( " +
-            "SELECT " +
-            "  C.NM_CONVENIO, " +
-            "  TRUNC(SYSDATE - A.DT_FINAL) QTDE_DIAS, " +
-            "  (CASE " +
-            "   WHEN ((SYSDATE - A.DT_FINAL) <= 30) THEN 'AMARELO' " +
-            "   WHEN ((SYSDATE - A.DT_FINAL) BETWEEN 30 AND 60) THEN 'AZUL' " +
-            "   WHEN ((SYSDATE - A.DT_FINAL) > 60) THEN 'VERMELHO' " +
-            "   END) STATUS, " +
-            "  A.VL_TOTAL_CONTA " +
-            "FROM DBAMV.REG_FAT A " +
-            "  JOIN DBAMV.CONVENIO C " +
-            "    ON A.CD_CONVENIO = C.CD_CONVENIO " +
-            "  JOIN DBAMV.TB_ATENDIME D " +
-            "    ON A.CD_ATENDIMENTO = D.CD_ATENDIMENTO " +
-            "WHERE A.DT_FINAL IS NOT NULL " +
-            "      AND A.CD_REMESSA IS NULL " +
-            "      AND A.CD_MULTI_EMPRESA = 1 " +
-            "      AND A.CD_CONVENIO <> 1 " +
-            "      AND D.TP_ATENDIMENTO = 'I' " +
-            "      AND A.VL_TOTAL_CONTA > 0 " +
-            "UNION " +
-            "SELECT " +
-            "  C.NM_CONVENIO, " +
-            "  TRUNC(SYSDATE - D.DT_ALTA) QTDE_DIAS, " +
-            "  (CASE " +
-            "   WHEN ((SYSDATE - D.DT_ALTA) <= 30) THEN 'AMARELO' " +
-            "   WHEN ((SYSDATE - D.DT_ALTA) BETWEEN 30 AND 60) THEN 'AZUL' " +
-            "   WHEN ((SYSDATE - D.DT_ALTA) > 60) THEN 'VERMELHO' " +
-            "   END) STATUS, " +
-            "  T.VL_TOTAL_CONTA " +
-            "FROM DBAMV.REG_AMB T " +
-            "  JOIN DBAMV.ITREG_AMB B " +
-            "    ON T.CD_REG_AMB = B.CD_REG_AMB " +
-            "  JOIN DBAMV.CONVENIO C " +
-            "    ON T.CD_CONVENIO = C.CD_CONVENIO " +
-            "  JOIN DBAMV.TB_ATENDIME D " +
-            "    ON B.CD_ATENDIMENTO = D.CD_ATENDIMENTO " +
-            "WHERE D.DT_ALTA IS NOT NULL " +
-            "      AND T.CD_REMESSA IS NULL " +
-            "      AND T.CD_MULTI_EMPRESA = 1 " +
-            "      AND T.CD_CONVENIO <> 1 " +
-            "      AND D.TP_ATENDIMENTO = 'U' " +
-            "      AND T.VL_TOTAL_CONTA > 0 " +
-            " " +
-            ") GROUP BY NM_CONVENIO, STATUS";
+        "SELECT " +
+            "  NM_CONVENIO, " +
+            "  STATUS, " +
+            "  COUNT(*)                      QTD, " +
+            "  TRUNC(AVG(QTDE_DIAS))         MEDIA_DIAS, " +
+            "  ROUND(AVG(VL_TOTAL_CONTA), 2) MEDIA_VALOR " +
+            "FROM ( " +
+            "  SELECT " +
+            "    C.NM_CONVENIO, " +
+            "    TRUNC(SYSDATE - A.DT_FINAL) QTDE_DIAS, " +
+            "    (CASE " +
+            "     WHEN ((SYSDATE - A.DT_FINAL) <= 30) " +
+            "       THEN 'VERDE' " +
+            "     WHEN ((SYSDATE - A.DT_FINAL) BETWEEN 30 AND 60) " +
+            "       THEN 'AMARELO' " +
+            "     WHEN ((SYSDATE - A.DT_FINAL) > 60) " +
+            "       THEN 'VERMELHO' " +
+            "     END)                       STATUS, " +
+            "    A.VL_TOTAL_CONTA " +
+            "  FROM DBAMV.REG_FAT A " +
+            "    JOIN DBAMV.CONVENIO C " +
+            "      ON A.CD_CONVENIO = C.CD_CONVENIO " +
+            "    JOIN DBAMV.TB_ATENDIME D " +
+            "      ON A.CD_ATENDIMENTO = D.CD_ATENDIMENTO " +
+            "  WHERE A.DT_FINAL IS NOT NULL " +
+            "        AND A.CD_REMESSA IS NULL " +
+            "        AND A.CD_MULTI_EMPRESA = 1 " +
+            "        AND A.CD_CONVENIO <> 1 " +
+            "        AND D.TP_ATENDIMENTO = 'I' " +
+            "        AND A.VL_TOTAL_CONTA > 0 " +
+            "        AND D.DT_ATENDIMENTO >= TO_DATE('01-01-2016', 'DD-MM-YYYY') " +
+            "  UNION " +
+            "  SELECT " +
+            "    C.NM_CONVENIO, " +
+            "    TRUNC(SYSDATE - D.DT_ALTA) QTDE_DIAS, " +
+            "    (CASE " +
+            "     WHEN ((D.TP_ATENDIMENTO = 'U' AND (SYSDATE - D.DT_ALTA) <= 30) OR " +
+            "           (D.TP_ATENDIMENTO = 'E' AND (SYSDATE - D.DT_ATENDIMENTO) <= 30)) " +
+            "       THEN 'VERDE' " +
+            "     WHEN ((D.TP_ATENDIMENTO = 'U' AND (SYSDATE - D.DT_ALTA) BETWEEN 31 AND 60) OR " +
+            "           (D.TP_ATENDIMENTO = 'E' AND (SYSDATE - D.DT_ATENDIMENTO) BETWEEN 31 AND 60)) " +
+            "       THEN 'AMARELO' " +
+            "     WHEN ((D.TP_ATENDIMENTO = 'U' AND (SYSDATE - D.DT_ALTA) > 60) OR " +
+            "           (D.TP_ATENDIMENTO = 'E' AND (SYSDATE - D.DT_ATENDIMENTO) > 60)) " +
+            "       THEN 'VERMELHO' " +
+            "     END)                      STATUS, " +
+            "    T.VL_TOTAL_CONTA " +
+            "  FROM DBAMV.REG_AMB T " +
+            "    JOIN DBAMV.ITREG_AMB B " +
+            "      ON T.CD_REG_AMB = B.CD_REG_AMB " +
+            "    JOIN DBAMV.CONVENIO C " +
+            "      ON T.CD_CONVENIO = C.CD_CONVENIO " +
+            "    JOIN DBAMV.TB_ATENDIME D " +
+            "      ON B.CD_ATENDIMENTO = D.CD_ATENDIMENTO " +
+            "  WHERE D.DT_ALTA IS NOT NULL " +
+            "        AND T.CD_REMESSA IS NULL " +
+            "        AND T.CD_MULTI_EMPRESA = 1 " +
+            "        AND T.CD_CONVENIO <> 1 " +
+            "        AND (D.TP_ATENDIMENTO = 'U' OR D.TP_ATENDIMENTO = 'E') " +
+            "        AND T.VL_TOTAL_CONTA > 0 " +
+            "        AND D.DT_ATENDIMENTO >= TO_DATE('01-01-2016', 'DD-MM-YYYY')) " +
+            "GROUP BY " +
+            "  NM_CONVENIO, " +
+            "  STATUS";
 
     Session session = getSession();
     SQLQuery query = session.createSQLQuery(sql);
@@ -86,7 +103,11 @@ public class SemRemessaSrv extends AbstractSrv {
       BigDecimal mediaValor = (BigDecimal) obj[4];
       SemRemessaItem item = new SemRemessaItem();
       item.setConvenio(convenio);
-      item.setStatus(status);
+      if (status == null) {
+        item.setStatus("VERDE");
+      } else {
+        item.setStatus(status);
+      }
       item.setQuantidade(quantidade);
       item.setMediaDias(mediaDias);
       item.setMediaValor(numberFormat.format(mediaValor));
@@ -96,7 +117,20 @@ public class SemRemessaSrv extends AbstractSrv {
     Collections.sort(items, new Comparator<SemRemessaItem>() {
       @Override
       public int compare(SemRemessaItem o1, SemRemessaItem o2) {
-        return -o1.getQuantidade().compareTo(o2.getQuantidade());
+        if (o1.getStatus().equals(o2.getStatus())) {
+          return -o1.getQuantidade().compareTo(o2.getQuantidade());
+        } else {
+          if (o1.getStatus().equals("VERMELHO")) {
+            return -1;
+          } else if (o2.getStatus().equals("VERMELHO")) {
+            return 1;
+          } else if (o1.getStatus().equals("AMARELO")) {
+            return -1;
+          } else {
+            return 1;
+          }
+        }
+
       }
     });
 

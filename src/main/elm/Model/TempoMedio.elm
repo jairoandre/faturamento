@@ -1,22 +1,43 @@
-module Model.TempoMedio exposing (TempoMedio, TempoMedioItem, tempoMedioDecoder, mockTempoMedio)
+module Model.TempoMedio exposing (SetorTempoMedio, TempoMedio, TempoMedioItem, setorTempoMedioDecoder)
 
 import Json.Decode exposing (Decoder, int, string, list)
-import Json.Decode.Pipeline exposing (decode, optional)
+import Json.Decode.Pipeline exposing (decode, hardcoded, optional)
+
+
+type alias SetorTempoMedio =
+    { date : String
+    , version : String
+    , items : List TempoMedio
+    , index : Int
+    }
+
+
+setorTempoMedioDecoder : Decoder SetorTempoMedio
+setorTempoMedioDecoder =
+    decode SetorTempoMedio
+        |> optional "date" string ""
+        |> optional "version" string ""
+        |> optional "items" (list tempoMedioDecoder) []
+        |> hardcoded 0
 
 
 type alias TempoMedio =
-    { date : String
-    , version : String
+    { title : String
     , items : List TempoMedioItem
+    , page : Int
+    , timer : Int
+    , cycles : Int
     }
 
 
 tempoMedioDecoder : Decoder TempoMedio
 tempoMedioDecoder =
     decode TempoMedio
-        |> optional "date" string ""
-        |> optional "version" string ""
+        |> optional "title" string ""
         |> optional "items" (list tempoMedioItemDecoder) []
+        |> hardcoded 0
+        |> hardcoded 0
+        |> hardcoded 0
 
 
 type alias TempoMedioItem =
@@ -32,24 +53,3 @@ tempoMedioItemDecoder =
         |> optional "nome" string ""
         |> optional "quantidade" int 0
         |> optional "media" int -1
-
-
-mockTempoMedio : TempoMedio
-mockTempoMedio =
-    { date = "10/11/2016"
-    , version = "0.0.1"
-    , items = mockList
-    }
-
-
-mockList : List TempoMedioItem
-mockList =
-    List.map mockItem [1..20]
-
-
-mockItem : Int -> TempoMedioItem
-mockItem n =
-    { nome = "Convênio " ++ (toString n)
-    , quantidade = n * 2
-    , media = n * 3
-    }

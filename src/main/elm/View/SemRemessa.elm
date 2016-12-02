@@ -18,11 +18,11 @@ semRemessaToHtml semRemessa =
         div [ class "list--wrapper list--wrapper--semRemessa" ]
             [ div [ class "header--wrapper" ]
                 [ div [ class "header--wrapper--top" ]
-                    [ div [ class "header--title header--title--semRemessa" ] [ text "GUIAS SEM REMESSA (MV)" ]
+                    [ div [ class "header--title header--title--semRemessa" ] [ text "CONTAS SEM REMESSA (MV)" ]
                     ]
                 , div [ class "header--wrapper--bottom" ]
                     [ customDiv "header--column header--column--convenio" "header--inner" (text "CONVÊNIO")
-                    , customDiv "header--column header--column--quantidade" "header--inner--right" (text "ABERTAS")
+                    , customDiv "header--column header--column--quantidade" "header--inner--right" (text "QTD.")
                     , customDiv "header--column header--column--media" "header--inner--right" (text "MÉDIA DIAS")
                     , customDiv "header--column header--column--mediaValor" "header--inner--right" (text "MÉDIA VALORES")
                     ]

@@ -7,6 +7,7 @@ body {
 	overflow: hidden;
 	width: @width;
 	height: @height;
+	color: #fff;
 }
 
 .app--wrapper {
@@ -39,7 +40,7 @@ body {
 .header--wrapper {
 	position: absolute;
 	width: @width;
-	height: headerHeight;
+	height: @headerHeight;
 	line-height: @headerHeight;
 	font-size: @headerHeight;
 	color: #777;
@@ -53,7 +54,7 @@ body {
 	height: @headerTopHeight;
 	line-height: @headerTopHeight;
 	text-align: center;
-	font-size: 20px;
+	font-size: 15px;
 }
 @logoWidth: 0.15 * @width;
 
@@ -122,12 +123,12 @@ body {
 	padding-right: 5px;
 	text-align: right;
 }
-@convenioWidth: 250px;
+@convenioWidth: 220px;
 
 .header--column--convenio {
 	width: @convenioWidth;
 }
-@quantidadeWidth: 70px;
+@quantidadeWidth: 100px;
 @quantidadeLeft: @convenioWidth;
 
 .header--column--quantidade {
@@ -171,6 +172,9 @@ body {
 
 .row--inner--padding {
 	padding-left: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .row--inner--padding--right {
@@ -216,20 +220,20 @@ body {
 }
 
 .span--padding {
-	padding: 2px;
+	padding: 2px 10px;
 	border-radius: 5px;
 	color: #fff;
-	text-shadow: 1px 1px 1px #333;
+	text-shadow: 1px 1px 1px #111;
 }
 
 .span--padding--VERMELHO {
 	background-color: rgb(238, 32, 38);
 }
 
-.span--padding--AZUL {
-	background-color: rgb(32, 90, 238);
+.span--padding--VERDE {
+	background-color: rgb(0, 238, 14);
 }
 
 .span--padding--AMARELO {
-	background-color: rgb(252, 204, 0);
+	background-color: rgb(252, 243, 0);
 }

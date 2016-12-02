@@ -1,5 +1,7 @@
 package br.com.vah.faturamento.services;
 
+import br.com.vah.faturamento.dto.SetorTempoMedio;
+import br.com.vah.faturamento.dto.TempoMedio;
 import br.com.vah.faturamento.dto.TempoMedioItem;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -17,43 +19,56 @@ import java.util.Map;
 @Stateless
 public class TempoMedioSrv extends AbstractSrv {
 
-  public List<TempoMedioItem> recuperarTempoMedio() {
+  public List<TempoMedio> recuperarTempoMedio() {
     String sqlQtdAbertas =
-        "SELECT C.NM_CONVENIO, COUNT(*) AS QTD FROM USRDBVAH.TB_GUIABI_GUIA G" +
+        "SELECT C.NM_CONVENIO, COUNT(*) AS QTD, S.NM_SETOR FROM USRDBVAH.TB_GUIABI_GUIA G" +
         "  LEFT JOIN DBAMV.TB_ATENDIME ATD ON ATD.CD_ATENDIMENTO = G.CD_ATENDIMENTO" +
         "  LEFT JOIN DBAMV.CONVENIO C ON C.CD_CONVENIO = ATD.CD_CONVENIO" +
+        "  LEFT JOIN DBAMV.SETOR S ON S.CD_SETOR = G.CD_SETOR " +
         "  WHERE DT_RESPOSTA_CONVENIO IS NULL" +
         "  AND DT_GUIA > to_date('01-08-2016', 'DD-MM-YYYY')" +
-        "  GROUP BY C.NM_CONVENIO" +
-        "  ORDER BY QTD DESC";
+        "  GROUP BY C.NM_CONVENIO, S.NM_SETOR" +
+        "  ORDER BY S.NM_SETOR ASC, QTD DESC";
 
     String sqlMediaDias =
-        "SELECT C.NM_CONVENIO, CAST(AVG(G.DT_RESPOSTA_CONVENIO - G.DT_GUIA) AS INT) AS DIAS_RESPOSTA" +
+        "SELECT C.NM_CONVENIO, CAST(AVG(G.DT_RESPOSTA_CONVENIO - G.DT_GUIA) AS INT) AS DIAS_RESPOSTA, S.NM_SETOR" +
             " FROM USRDBVAH.TB_GUIABI_GUIA G" +
             "  LEFT JOIN DBAMV.TB_ATENDIME ATD ON ATD.CD_ATENDIMENTO = G.CD_ATENDIMENTO" +
             "  LEFT JOIN DBAMV.CONVENIO C ON C.CD_CONVENIO = ATD.CD_CONVENIO" +
+            "  LEFT JOIN DBAMV.SETOR S ON S.CD_SETOR = G.CD_SETOR" +
             " WHERE DT_RESPOSTA_CONVENIO IS NOT NULL" +
             "  AND DT_GUIA > TO_DATE('01-08-2016', 'DD-MM-YYYY')" +
             "  AND DT_RESPOSTA_CONVENIO > DT_GUIA" +
-            " GROUP BY C.NM_CONVENIO" +
-            " ORDER BY DIAS_RESPOSTA DESC";
+            " GROUP BY C.NM_CONVENIO, S.NM_SETOR" +
+            " ORDER BY S.NM_SETOR ASC, DIAS_RESPOSTA DESC";
 
     Session session = getSession();
     SQLQuery query = session.createSQLQuery(sqlQtdAbertas);
 
     List<Object[]> result = (List<Object[]>) query.list();
 
-    List<TempoMedioItem> list = new ArrayList<>();
-    Map<String, TempoMedioItem> map = new HashMap<>();
+    Map<String, TempoMedio> tempos = new HashMap<>();
+    Map<String, Map<String, TempoMedioItem>> convenios = new HashMap<>();
+
+    List<TempoMedio> list = new ArrayList<>();
 
     for (Object[] obj : result) {
       String convenio = (String) obj[0];
       Integer qtdAbertas = ((BigDecimal) obj[1]).intValue();
-      TempoMedioItem tempoMedio = new TempoMedioItem();
-      tempoMedio.setNome(convenio);
-      tempoMedio.setQuantidade(qtdAbertas);
-      list.add(tempoMedio);
-      map.put(convenio, tempoMedio);
+      String setor = ((String) obj[2]);
+      TempoMedio tempo = tempos.get(setor);
+      if (tempo == null) {
+        tempo = new TempoMedio();
+        tempo.setTitle(setor);
+        tempos.put(setor, tempo);
+        convenios.put(setor, new HashMap<>());
+        list.add(tempo);
+      }
+      TempoMedioItem item = new TempoMedioItem();
+      item.setNome(convenio);
+      item.setQuantidade(qtdAbertas);
+      tempo.getItems().add(item);
+      convenios.get(setor).put(convenio, item);
     }
 
     query = session.createSQLQuery(sqlMediaDias);
@@ -63,16 +78,24 @@ public class TempoMedioSrv extends AbstractSrv {
     for (Object[] obj : result) {
       String convenio = (String) obj[0];
       Integer media = ((BigDecimal) obj[1]).intValue();
-      TempoMedioItem tempoMedio = map.get(convenio);
-      if (tempoMedio == null) {
-        tempoMedio = new TempoMedioItem();
-        tempoMedio.setNome(convenio);
-        tempoMedio.setMedia(media);
-        tempoMedio.setQuantidade(-1);
-        list.add(tempoMedio);
-        map.put(convenio, tempoMedio);
+      String setor = ((String) obj[2]);
+      TempoMedio tempo = tempos.get(setor);
+      if (tempo == null) {
+        tempo = new TempoMedio();
+        tempo.setTitle(setor);
+        tempos.put(setor, tempo);
+        convenios.put(setor, new HashMap<>());
+      }
+      TempoMedioItem item = convenios.get(setor).get(convenio);
+      if (item == null) {
+        item = new TempoMedioItem();
+        item.setNome(convenio);
+        item.setMedia(media);
+        item.setQuantidade(0);
+        tempo.getItems().add(item);
+        convenios.get(setor).put(convenio, item);
       } else {
-        tempoMedio.setMedia(media);
+        item.setMedia(media);
       }
     }
 

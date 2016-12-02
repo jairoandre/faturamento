@@ -4,6 +4,7 @@ body {
   overflow: hidden;
   width: 1200px;
   height: 675px;
+  color: #fff;
 }
 .app--wrapper {
   position: relative;
@@ -28,7 +29,7 @@ body {
 .header--wrapper {
   position: absolute;
   width: 1200px;
-  height: headerHeight;
+  height: 75px;
   line-height: 75px;
   font-size: 75px;
   color: #777;
@@ -40,7 +41,7 @@ body {
   height: 50px;
   line-height: 50px;
   text-align: center;
-  font-size: 20px;
+  font-size: 15px;
 }
 .header--logo {
   position: absolute;
@@ -92,11 +93,11 @@ body {
   text-align: right;
 }
 .header--column--convenio {
-  width: 250px;
+  width: 220px;
 }
 .header--column--quantidade {
-  width: 70px;
-  left: 250px;
+  width: 100px;
+  left: 220px;
 }
 .header--column--media {
   width: 70px;
@@ -122,6 +123,9 @@ body {
 }
 .row--inner--padding {
   padding-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .row--inner--padding--right {
   padding-right: 5px;
@@ -199,11 +203,11 @@ body {
   overflow: hidden;
 }
 .cell--convenio {
-  width: 250px;
+  width: 220px;
 }
 .cell--quantidade {
-  width: 70px;
-  left: 250px;
+  width: 100px;
+  left: 220px;
 }
 .cell--media {
   width: 70px;
@@ -214,17 +218,17 @@ body {
   left: 390px;
 }
 .span--padding {
-  padding: 2px;
+  padding: 2px 10px;
   border-radius: 5px;
   color: #fff;
-  text-shadow: 1px 1px 1px #333;
+  text-shadow: 1px 1px 1px #111;
 }
 .span--padding--VERMELHO {
   background-color: #ee2026;
 }
-.span--padding--AZUL {
-  background-color: #205aee;
+.span--padding--VERDE {
+  background-color: #00ee0e;
 }
 .span--padding--AMARELO {
-  background-color: #fccc00;
+  background-color: #fcf300;
 }

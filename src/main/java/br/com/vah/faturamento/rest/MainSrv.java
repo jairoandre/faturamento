@@ -1,9 +1,6 @@
 package br.com.vah.faturamento.rest;
 
-import br.com.vah.faturamento.dto.SemRemessa;
-import br.com.vah.faturamento.dto.SemRemessaItem;
-import br.com.vah.faturamento.dto.TempoMedioItem;
-import br.com.vah.faturamento.dto.TempoMedio;
+import br.com.vah.faturamento.dto.*;
 import br.com.vah.faturamento.services.SemRemessaSrv;
 import br.com.vah.faturamento.services.TempoMedioSrv;
 
@@ -30,13 +27,13 @@ public class MainSrv {
   @GET
   @Path("/tempoMedio")
   @Produces("application/json")
-  public TempoMedio tempoMedioConvenio() {
+  public SetorTempoMedio tempoMedioConvenio() {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    TempoMedio convenio = new TempoMedio();
-    convenio.setDate(sdf.format(new Date()));
-    List<TempoMedioItem> items = tempoMedioSrv.recuperarTempoMedio();
-    convenio.setItems(items);
-    return convenio;
+    SetorTempoMedio setorTempoMedio = new SetorTempoMedio();
+    setorTempoMedio.setDate(sdf.format(new Date()));
+    List<TempoMedio> tempos = tempoMedioSrv.recuperarTempoMedio();
+    setorTempoMedio.setItems(tempos);
+    return setorTempoMedio;
   }
 
   @GET

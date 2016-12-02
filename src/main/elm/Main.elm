@@ -7,11 +7,10 @@ import Time exposing (Time)
 import Window exposing (Size)
 import Model.TempoMedio exposing (..)
 import View.TempoMedio exposing (..)
-import Api.TempoMedio exposing (getTempoMedio)
+import Api exposing (getTempoMedio, getSemRemessa)
 import Model.SemRemessa exposing (..)
 import View.SemRemessa exposing (..)
-import Api.SemRemessa exposing (getSemRemessa)
-import Model.Utils exposing (tickTimer)
+import Model.Utils exposing (tickTimer, tickScrollableBag)
 import Navigation
 import String
 import Window
@@ -34,7 +33,7 @@ main =
 
 type alias Model =
     { page : Page
-    , tempoMedio : Maybe TempoMedio
+    , tempoMedio : Maybe SetorTempoMedio
     , semRemessa : Maybe SemRemessa
     , scale : Float
     , size : Window.Size
@@ -49,9 +48,10 @@ type Page
 
 type Msg
     = Resize Page Size
+    | Refresh Time
     | TickTime Time
     | FetchFail Http.Error
-    | FetchSuccessTempoMedio TempoMedio
+    | FetchSuccessTempoMedio SetorTempoMedio
     | FetchSuccessSemRemessa SemRemessa
 
 
@@ -125,7 +125,7 @@ view model =
                                     text "Carregando..."
 
                                 Just tm ->
-                                    tempoMedioToHtml tm
+                                    setorTempoMedioToHtml tm
 
                         semRemessa =
                             case model.semRemessa of
@@ -162,7 +162,10 @@ update message model =
                     resizeCmd model newSize Cmd.none
 
                 Faturamento ->
-                    resizeCmd model newSize fetchTempoMedio
+                    resizeCmd model newSize (Cmd.batch [ fetchSemRemessa, fetchTempoMedio ])
+
+        Refresh newTime ->
+            ( model, Cmd.batch [ fetchSemRemessa, fetchTempoMedio ] )
 
         TickTime newTime ->
             case model.page of
@@ -181,8 +184,16 @@ update message model =
 
                                 Nothing ->
                                     Nothing
+
+                        newTempoMedio =
+                            case model.tempoMedio of
+                                Just tempoMedio ->
+                                    Just (tickScrollableBag tempoMedio 5 20)
+
+                                Nothing ->
+                                    Nothing
                     in
-                        ( { model | semRemessa = newSemRemessa }, Cmd.none )
+                        ( { model | semRemessa = newSemRemessa, tempoMedio = newTempoMedio }, Cmd.none )
 
         FetchFail e ->
             let
@@ -192,7 +203,7 @@ update message model =
                 ( model, Cmd.none )
 
         FetchSuccessTempoMedio tempoMedio ->
-            ( { model | tempoMedio = Just tempoMedio }, fetchSemRemessa )
+            ( { model | tempoMedio = Just tempoMedio }, Cmd.none )
 
         FetchSuccessSemRemessa semRemessa ->
             ( { model | semRemessa = Just semRemessa }, Cmd.none )
@@ -221,6 +232,7 @@ subscriptions model =
     Sub.batch
         [ Window.resizes (Resize model.page)
         , Time.every Time.second TickTime
+        , Time.every (5 * Time.minute) Refresh
         ]
 
 

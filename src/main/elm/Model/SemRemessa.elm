@@ -10,6 +10,7 @@ type alias SemRemessa =
     , items : List SemRemessaItem
     , page : Int
     , timer : Int
+    , cycles : Int
     }
 
 
@@ -19,6 +20,7 @@ semRemessaDecoder =
         |> optional "date" string ""
         |> optional "version" string ""
         |> optional "items" (list semRemessaItemDecoder) []
+        |> hardcoded 0
         |> hardcoded 0
         |> hardcoded 0
 

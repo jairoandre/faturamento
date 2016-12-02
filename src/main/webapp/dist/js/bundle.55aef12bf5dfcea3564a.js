@@ -9580,9 +9580,79 @@
 					}));
 		});
 
-	var _user$project$Model_SemRemessa$SemRemessa = F5(
+	var _user$project$Model_TempoMedio$SetorTempoMedio = F4(
+		function (a, b, c, d) {
+			return {date: a, version: b, items: c, index: d};
+		});
+	var _user$project$Model_TempoMedio$TempoMedio = F5(
 		function (a, b, c, d, e) {
-			return {date: a, version: b, items: c, page: d, timer: e};
+			return {title: a, items: b, page: c, timer: d, cycles: e};
+		});
+	var _user$project$Model_TempoMedio$TempoMedioItem = F3(
+		function (a, b, c) {
+			return {nome: a, quantidade: b, media: c};
+		});
+	var _user$project$Model_TempoMedio$tempoMedioItemDecoder = A4(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+		'media',
+		_elm_lang$core$Json_Decode$int,
+		-1,
+		A4(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+			'quantidade',
+			_elm_lang$core$Json_Decode$int,
+			0,
+			A4(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+				'nome',
+				_elm_lang$core$Json_Decode$string,
+				'',
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_TempoMedio$TempoMedioItem))));
+	var _user$project$Model_TempoMedio$tempoMedioDecoder = A2(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+		0,
+		A2(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+			0,
+			A2(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+				0,
+				A4(
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+					'items',
+					_elm_lang$core$Json_Decode$list(_user$project$Model_TempoMedio$tempoMedioItemDecoder),
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					A4(
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+						'title',
+						_elm_lang$core$Json_Decode$string,
+						'',
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_TempoMedio$TempoMedio))))));
+	var _user$project$Model_TempoMedio$setorTempoMedioDecoder = A2(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+		0,
+		A4(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+			'items',
+			_elm_lang$core$Json_Decode$list(_user$project$Model_TempoMedio$tempoMedioDecoder),
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			A4(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+				'version',
+				_elm_lang$core$Json_Decode$string,
+				'',
+				A4(
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+					'date',
+					_elm_lang$core$Json_Decode$string,
+					'',
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_TempoMedio$SetorTempoMedio)))));
+
+	var _user$project$Model_SemRemessa$SemRemessa = F6(
+		function (a, b, c, d, e, f) {
+			return {date: a, version: b, items: c, page: d, timer: e, cycles: f};
 		});
 	var _user$project$Model_SemRemessa$SemRemessaItem = F5(
 		function (a, b, c, d, e) {
@@ -9620,26 +9690,40 @@
 		A2(
 			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
 			0,
-			A4(
-				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-				'items',
-				_elm_lang$core$Json_Decode$list(_user$project$Model_SemRemessa$semRemessaItemDecoder),
-				_elm_lang$core$Native_List.fromArray(
-					[]),
+			A2(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+				0,
 				A4(
 					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-					'version',
-					_elm_lang$core$Json_Decode$string,
-					'',
+					'items',
+					_elm_lang$core$Json_Decode$list(_user$project$Model_SemRemessa$semRemessaItemDecoder),
+					_elm_lang$core$Native_List.fromArray(
+						[]),
 					A4(
 						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-						'date',
+						'version',
 						_elm_lang$core$Json_Decode$string,
 						'',
-						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_SemRemessa$SemRemessa))))));
+						A4(
+							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+							'date',
+							_elm_lang$core$Json_Decode$string,
+							'',
+							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_SemRemessa$SemRemessa)))))));
 
-	var _user$project$Api_SemRemessa$apiHost = false ? 'http://localhost:8080/faturamento/' : '';
-	var _user$project$Api_SemRemessa$getSemRemessa = F2(
+	var _user$project$Api$apiHost = 'http://10.1.8.118:8080/faturamento/';
+	var _user$project$Api$getTempoMedio = F2(
+		function (error, success) {
+			return A3(
+				_elm_lang$core$Task$perform,
+				error,
+				success,
+				A2(
+					_evancz$elm_http$Http$get,
+					_user$project$Model_TempoMedio$setorTempoMedioDecoder,
+					A2(_elm_lang$core$Basics_ops['++'], _user$project$Api$apiHost, 'rest/api/tempoMedio')));
+		});
+	var _user$project$Api$getSemRemessa = F2(
 		function (error, success) {
 			return A3(
 				_elm_lang$core$Task$perform,
@@ -9648,77 +9732,7 @@
 				A2(
 					_evancz$elm_http$Http$get,
 					_user$project$Model_SemRemessa$semRemessaDecoder,
-					A2(_elm_lang$core$Basics_ops['++'], _user$project$Api_SemRemessa$apiHost, 'rest/api/semRemessa')));
-		});
-
-	var _user$project$Model_TempoMedio$mockItem = function (n) {
-		return {
-			nome: A2(
-				_elm_lang$core$Basics_ops['++'],
-				'Convênio ',
-				_elm_lang$core$Basics$toString(n)),
-			quantidade: n * 2,
-			media: n * 3
-		};
-	};
-	var _user$project$Model_TempoMedio$mockList = A2(
-		_elm_lang$core$List$map,
-		_user$project$Model_TempoMedio$mockItem,
-		_elm_lang$core$Native_List.range(1, 20));
-	var _user$project$Model_TempoMedio$mockTempoMedio = {date: '10/11/2016', version: '0.0.1', items: _user$project$Model_TempoMedio$mockList};
-	var _user$project$Model_TempoMedio$TempoMedio = F3(
-		function (a, b, c) {
-			return {date: a, version: b, items: c};
-		});
-	var _user$project$Model_TempoMedio$TempoMedioItem = F3(
-		function (a, b, c) {
-			return {nome: a, quantidade: b, media: c};
-		});
-	var _user$project$Model_TempoMedio$tempoMedioItemDecoder = A4(
-		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-		'media',
-		_elm_lang$core$Json_Decode$int,
-		-1,
-		A4(
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-			'quantidade',
-			_elm_lang$core$Json_Decode$int,
-			0,
-			A4(
-				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-				'nome',
-				_elm_lang$core$Json_Decode$string,
-				'',
-				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_TempoMedio$TempoMedioItem))));
-	var _user$project$Model_TempoMedio$tempoMedioDecoder = A4(
-		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-		'items',
-		_elm_lang$core$Json_Decode$list(_user$project$Model_TempoMedio$tempoMedioItemDecoder),
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		A4(
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-			'version',
-			_elm_lang$core$Json_Decode$string,
-			'',
-			A4(
-				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-				'date',
-				_elm_lang$core$Json_Decode$string,
-				'',
-				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_TempoMedio$TempoMedio))));
-
-	var _user$project$Api_TempoMedio$apiHost = false ? 'http://localhost:8080/faturamento/' : '';
-	var _user$project$Api_TempoMedio$getTempoMedio = F2(
-		function (error, success) {
-			return A3(
-				_elm_lang$core$Task$perform,
-				error,
-				success,
-				A2(
-					_evancz$elm_http$Http$get,
-					_user$project$Model_TempoMedio$tempoMedioDecoder,
-					A2(_elm_lang$core$Basics_ops['++'], _user$project$Api_TempoMedio$apiHost, 'rest/api/tempoMedio')));
+					A2(_elm_lang$core$Basics_ops['++'], _user$project$Api$apiHost, 'rest/api/semRemessa')));
 		});
 
 	var _user$project$View_Utils$customDiv = F3(
@@ -9820,10 +9834,11 @@
 					[convenio, quantidade, media]));
 		});
 	var _user$project$View_TempoMedio$tempoMedioToHtml = function (tempoMedio) {
+		var items = A2(_elm_lang$core$List$drop, tempoMedio.page * 20, tempoMedio.items);
 		var rows = A2(
 			_elm_lang$core$List$indexedMap,
 			_user$project$View_TempoMedio$tempoMedioItemToHtml,
-			A2(_elm_lang$core$List$take, 20, tempoMedio.items));
+			A2(_elm_lang$core$List$take, 20, items));
 		return A2(
 			_elm_lang$html$Html$div,
 			_elm_lang$core$Native_List.fromArray(
@@ -9856,7 +9871,8 @@
 										]),
 									_elm_lang$core$Native_List.fromArray(
 										[
-											_elm_lang$html$Html$text('GUIAS SEM RESPOSTA')
+											_elm_lang$html$Html$text(
+											A2(_elm_lang$core$Basics_ops['++'], 'GUIAS SEM RESPOSTA - ', tempoMedio.title))
 										]))
 								])),
 							A2(
@@ -9876,12 +9892,12 @@
 									_user$project$View_Utils$customDiv,
 									'header--column header--column--quantidade',
 									'header--inner--right',
-									_elm_lang$html$Html$text('ABERTAS')),
+									_elm_lang$html$Html$text('QTD.')),
 									A3(
 									_user$project$View_Utils$customDiv,
 									'header--column header--column--media',
 									'header--inner--right',
-									_elm_lang$html$Html$text('MÉDIA'))
+									_elm_lang$html$Html$text('MÉDIA DIAS'))
 								]))
 						])),
 					A2(
@@ -9892,6 +9908,24 @@
 						]),
 					rows)
 				]));
+	};
+	var _user$project$View_TempoMedio$setorTempoMedioToHtml = function (obj) {
+		var _p0 = A2(
+			_elm_lang$core$Array$get,
+			obj.index,
+			_elm_lang$core$Array$fromList(obj.items));
+		if (_p0.ctor === 'Just') {
+			return _user$project$View_TempoMedio$tempoMedioToHtml(_p0._0);
+		} else {
+			return A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Carregando...')
+					]));
+		}
 	};
 
 	var _user$project$View_SemRemessa$semRemessaItemToHtml = F2(
@@ -10037,7 +10071,7 @@
 										]),
 									_elm_lang$core$Native_List.fromArray(
 										[
-											_elm_lang$html$Html$text('GUIAS SEM REMESSA (MV)')
+											_elm_lang$html$Html$text('CONTAS SEM REMESSA (MV)')
 										]))
 								])),
 							A2(
@@ -10057,7 +10091,7 @@
 									_user$project$View_Utils$customDiv,
 									'header--column header--column--quantidade',
 									'header--inner--right',
-									_elm_lang$html$Html$text('ABERTAS')),
+									_elm_lang$html$Html$text('QTD.')),
 									A3(
 									_user$project$View_Utils$customDiv,
 									'header--column header--column--media',
@@ -10084,15 +10118,45 @@
 		function (obj, maxTimer, maxItems) {
 			if (_elm_lang$core$Native_Utils.cmp(obj.timer, maxTimer) > -1) {
 				var itemsLen = _elm_lang$core$List$length(obj.items);
-				var lastPage = ((itemsLen / maxItems) | 0) - 1;
-				var newPage = _elm_lang$core$Native_Utils.eq(obj.page, lastPage) ? 0 : (obj.page + 1);
+				var lastPage = (itemsLen / (maxItems + 1)) | 0;
+				var _p0 = _elm_lang$core$Native_Utils.eq(obj.page, lastPage) ? {ctor: '_Tuple2', _0: 0, _1: obj.cycles + 1} : {ctor: '_Tuple2', _0: obj.page + 1, _1: obj.cycles};
+				var newPage = _p0._0;
+				var cycles = _p0._1;
 				return _elm_lang$core$Native_Utils.update(
 					obj,
-					{timer: 0, page: newPage});
+					{timer: 0, cycles: cycles, page: newPage});
 			} else {
 				return _elm_lang$core$Native_Utils.update(
 					obj,
 					{timer: obj.timer + 1});
+			}
+		});
+	var _user$project$Model_Utils$tickScrollableBag = F3(
+		function (obj, maxTimer, maxItems) {
+			var itemsArray = _elm_lang$core$Array$fromList(obj.items);
+			var itemsLength = _elm_lang$core$Array$length(itemsArray);
+			var _p1 = A2(_elm_lang$core$Array$get, obj.index, itemsArray);
+			if (_p1.ctor === 'Just') {
+				var _p2 = _p1._0;
+				var tickedItem = A3(_user$project$Model_Utils$tickTimer, _p2, maxTimer, maxItems);
+				var afterItemCycles = tickedItem.cycles;
+				var itemsTail = A2(_elm_lang$core$List$drop, obj.index + 1, obj.items);
+				var itemsHead = A2(_elm_lang$core$List$take, obj.index, obj.items);
+				var newItems = A2(
+					_elm_lang$core$Basics_ops['++'],
+					itemsHead,
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Native_List.fromArray(
+							[tickedItem]),
+						itemsTail));
+				var currItemCycles = _p2.cycles;
+				var newIndex = _elm_lang$core$Native_Utils.eq(currItemCycles, afterItemCycles) ? obj.index : A2(_elm_lang$core$Basics_ops['%'], obj.index + 1, itemsLength);
+				return _elm_lang$core$Native_Utils.update(
+					obj,
+					{items: newItems, index: newIndex});
+			} else {
+				return obj;
 			}
 		});
 
@@ -10133,7 +10197,7 @@
 					if (_p2.ctor === 'Nothing') {
 						return _elm_lang$html$Html$text('Carregando...');
 					} else {
-						return _user$project$View_TempoMedio$tempoMedioToHtml(_p2._0);
+						return _user$project$View_TempoMedio$setorTempoMedioToHtml(_p2._0);
 					}
 				}();
 				var elems = _elm_lang$core$Native_List.fromArray(
@@ -10212,8 +10276,8 @@
 	var _user$project$Main$FetchFail = function (a) {
 		return {ctor: 'FetchFail', _0: a};
 	};
-	var _user$project$Main$fetchTempoMedio = A2(_user$project$Api_TempoMedio$getTempoMedio, _user$project$Main$FetchFail, _user$project$Main$FetchSuccessTempoMedio);
-	var _user$project$Main$fetchSemRemessa = A2(_user$project$Api_SemRemessa$getSemRemessa, _user$project$Main$FetchFail, _user$project$Main$FetchSuccessSemRemessa);
+	var _user$project$Main$fetchTempoMedio = A2(_user$project$Api$getTempoMedio, _user$project$Main$FetchFail, _user$project$Main$FetchSuccessTempoMedio);
+	var _user$project$Main$fetchSemRemessa = A2(_user$project$Api$getSemRemessa, _user$project$Main$FetchFail, _user$project$Main$FetchSuccessSemRemessa);
 	var _user$project$Main$update = F2(
 		function (message, model) {
 			var _p4 = message;
@@ -10224,8 +10288,22 @@
 					if (_p5.ctor === 'Home') {
 						return A3(_user$project$Main$resizeCmd, model, _p6, _elm_lang$core$Platform_Cmd$none);
 					} else {
-						return A3(_user$project$Main$resizeCmd, model, _p6, _user$project$Main$fetchTempoMedio);
+						return A3(
+							_user$project$Main$resizeCmd,
+							model,
+							_p6,
+							_elm_lang$core$Platform_Cmd$batch(
+								_elm_lang$core$Native_List.fromArray(
+									[_user$project$Main$fetchSemRemessa, _user$project$Main$fetchTempoMedio])));
 					}
+				case 'Refresh':
+					return {
+						ctor: '_Tuple2',
+						_0: model,
+						_1: _elm_lang$core$Platform_Cmd$batch(
+							_elm_lang$core$Native_List.fromArray(
+								[_user$project$Main$fetchSemRemessa, _user$project$Main$fetchTempoMedio]))
+					};
 				case 'TickTime':
 					var _p7 = model.page;
 					if (_p7.ctor === 'Home') {
@@ -10244,11 +10322,20 @@
 								_user$project$Main$toUrl(_user$project$Main$Faturamento))
 						};
 					} else {
-						var newSemRemessa = function () {
-							var _p8 = model.semRemessa;
+						var newTempoMedio = function () {
+							var _p8 = model.tempoMedio;
 							if (_p8.ctor === 'Just') {
 								return _elm_lang$core$Maybe$Just(
-									A3(_user$project$Model_Utils$tickTimer, _p8._0, 5, 20));
+									A3(_user$project$Model_Utils$tickScrollableBag, _p8._0, 5, 20));
+							} else {
+								return _elm_lang$core$Maybe$Nothing;
+							}
+						}();
+						var newSemRemessa = function () {
+							var _p9 = model.semRemessa;
+							if (_p9.ctor === 'Just') {
+								return _elm_lang$core$Maybe$Just(
+									A3(_user$project$Model_Utils$tickTimer, _p9._0, 5, 20));
 							} else {
 								return _elm_lang$core$Maybe$Nothing;
 							}
@@ -10257,7 +10344,7 @@
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
-								{semRemessa: newSemRemessa}),
+								{semRemessa: newSemRemessa, tempoMedio: newTempoMedio}),
 							_1: _elm_lang$core$Platform_Cmd$none
 						};
 					}
@@ -10275,7 +10362,7 @@
 							{
 								tempoMedio: _elm_lang$core$Maybe$Just(_p4._0)
 							}),
-						_1: _user$project$Main$fetchSemRemessa
+						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				default:
 					return {
@@ -10292,6 +10379,9 @@
 	var _user$project$Main$TickTime = function (a) {
 		return {ctor: 'TickTime', _0: a};
 	};
+	var _user$project$Main$Refresh = function (a) {
+		return {ctor: 'Refresh', _0: a};
+	};
 	var _user$project$Main$Resize = F2(
 		function (a, b) {
 			return {ctor: 'Resize', _0: a, _1: b};
@@ -10299,12 +10389,12 @@
 	var _user$project$Main$setScale = function (page) {
 		return A3(
 			_elm_lang$core$Task$perform,
-			function (_p9) {
+			function (_p10) {
 				return _elm_lang$core$Native_Utils.crash(
 					'Main',
 					{
-						start: {line: 203, column: 25},
-						end: {line: 203, column: 36}
+						start: {line: 214, column: 25},
+						end: {line: 214, column: 36}
 					})('Oopss!!!');
 			},
 			_user$project$Main$Resize(page),
@@ -10312,8 +10402,8 @@
 	};
 	var _user$project$Main$urlUpdate = F2(
 		function (result, model) {
-			var _p10 = result;
-			if (_p10.ctor === 'Err') {
+			var _p11 = result;
+			if (_p11.ctor === 'Err') {
 				return {
 					ctor: '_Tuple2',
 					_0: model,
@@ -10321,7 +10411,7 @@
 						_user$project$Main$toUrl(model.page))
 				};
 			} else {
-				if (_p10._0.ctor === 'Home') {
+				if (_p11._0.ctor === 'Home') {
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -10363,7 +10453,8 @@
 				[
 					_elm_lang$window$Window$resizes(
 					_user$project$Main$Resize(model.page)),
-					A2(_elm_lang$core$Time$every, _elm_lang$core$Time$second, _user$project$Main$TickTime)
+					A2(_elm_lang$core$Time$every, _elm_lang$core$Time$second, _user$project$Main$TickTime),
+					A2(_elm_lang$core$Time$every, 5 * _elm_lang$core$Time$minute, _user$project$Main$Refresh)
 				]));
 	};
 	var _user$project$Main$main = {
