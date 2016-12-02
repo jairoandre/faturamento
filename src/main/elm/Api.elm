@@ -8,7 +8,7 @@ import Http
 
 apiHost : String
 apiHost =
-    if True then
+    if False then
         "http://10.1.8.118:8080/faturamento/"
     else
         ""

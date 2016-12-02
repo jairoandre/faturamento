@@ -52,4 +52,4 @@ tempoMedioItemDecoder =
     decode TempoMedioItem
         |> optional "nome" string ""
         |> optional "quantidade" int 0
-        |> optional "media" int -1
+        |> optional "media" int 0

@@ -9596,7 +9596,7 @@
 		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
 		'media',
 		_elm_lang$core$Json_Decode$int,
-		-1,
+		0,
 		A4(
 			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
 			'quantidade',
@@ -9667,7 +9667,7 @@
 			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
 			'mediaDias',
 			_elm_lang$core$Json_Decode$int,
-			-1,
+			0,
 			A4(
 				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
 				'quantidade',
@@ -9711,7 +9711,7 @@
 							'',
 							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_SemRemessa$SemRemessa)))))));
 
-	var _user$project$Api$apiHost = 'http://10.1.8.118:8080/faturamento/';
+	var _user$project$Api$apiHost = false ? 'http://10.1.8.118:8080/faturamento/' : '';
 	var _user$project$Api$getTempoMedio = F2(
 		function (error, success) {
 			return A3(

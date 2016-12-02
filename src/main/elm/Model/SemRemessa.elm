@@ -40,5 +40,5 @@ semRemessaItemDecoder =
         |> optional "convenio" string ""
         |> optional "status" string ""
         |> optional "quantidade" int 0
-        |> optional "mediaDias" int -1
+        |> optional "mediaDias" int 0
         |> optional "mediaValor" string "R$ 0,00"
