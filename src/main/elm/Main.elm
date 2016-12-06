@@ -5,12 +5,14 @@ import Html.Attributes exposing (class, style, src)
 import UrlParser exposing (Parser, (</>), format, int, oneOf, s, string)
 import Time exposing (Time)
 import Window exposing (Size)
-import Model.TempoMedio exposing (..)
 import View.TempoMedio exposing (..)
-import Api exposing (getTempoMedio, getSemRemessa)
-import Model.SemRemessa exposing (..)
 import View.SemRemessa exposing (..)
+import View.Faturamento exposing (..)
+import Model.TempoMedio exposing (..)
+import Model.SemRemessa exposing (..)
+import Model.Faturamento exposing (..)
 import Model.Utils exposing (tickTimer, tickScrollableBag)
+import Api exposing (getTempoMedio, getSemRemessa, getFaturamento)
 import Navigation
 import String
 import Window
@@ -35,6 +37,7 @@ type alias Model =
     { page : Page
     , tempoMedio : Maybe SetorTempoMedio
     , semRemessa : Maybe SemRemessa
+    , faturamento : Maybe Faturamento
     , scale : Float
     , size : Window.Size
     , tick : Int
@@ -43,7 +46,8 @@ type alias Model =
 
 type Page
     = Home
-    | Faturamento
+    | FaturamentoView
+    | PorSetorView
 
 
 type Msg
@@ -53,6 +57,7 @@ type Msg
     | FetchFail Http.Error
     | FetchSuccessTempoMedio SetorTempoMedio
     | FetchSuccessSemRemessa SemRemessa
+    | FetchSuccessFaturamento Faturamento
 
 
 init : Result String Page -> ( Model, Cmd Msg )
@@ -61,7 +66,7 @@ init result =
         t =
             Debug.log (toString result) 0
     in
-        urlUpdate result (Model Home Nothing Nothing 1 { width = 0, height = 0 } 0)
+        urlUpdate result (Model Home Nothing Nothing Nothing 1 { width = 0, height = 0 } 0)
 
 
 urlUpdate : Result String Page -> Model -> ( Model, Cmd Msg )
@@ -73,8 +78,11 @@ urlUpdate result model =
         Ok (Home as page) ->
             ( { model | page = Home }, setScale Home )
 
-        Ok (Faturamento as page) ->
-            ( { model | page = Faturamento }, setScale Faturamento )
+        Ok (FaturamentoView as page) ->
+            ( { model | page = FaturamentoView }, setScale FaturamentoView )
+
+        Ok (PorSetorView as page) ->
+            ( { model | page = PorSetorView }, setScale PorSetorView )
 
 
 toUrl : Page -> String
@@ -83,8 +91,11 @@ toUrl page =
         Home ->
             "#home"
 
-        Faturamento ->
+        FaturamentoView ->
             "#fat"
+
+        PorSetorView ->
+            "#porSetor"
 
 
 hasParser : Navigation.Location -> Result String Page
@@ -101,7 +112,8 @@ pageParser =
     oneOf
         [ format Home (s "")
         , format Home (s "home")
-        , format Faturamento (s "fat")
+        , format FaturamentoView (s "fat")
+        , format PorSetorView (s "porSetor")
         ]
 
 
@@ -115,9 +127,21 @@ view model =
         content =
             case model.page of
                 Home ->
-                    text ("Redirecionando em " ++ (toString (3 - model.tick)) ++ "...")
+                    text ("Redirecionando em " ++ (toString (2 - model.tick)) ++ "...")
 
-                Faturamento ->
+                FaturamentoView ->
+                    let
+                        faturamento =
+                            case model.faturamento of
+                                Nothing ->
+                                    text "Carregando..."
+
+                                Just f ->
+                                    faturamentoHtml f
+                    in
+                        div [] [ faturamento ]
+
+                PorSetorView ->
                     let
                         tempoMedio =
                             case model.tempoMedio of
@@ -161,7 +185,10 @@ update message model =
                 Home ->
                     resizeCmd model newSize Cmd.none
 
-                Faturamento ->
+                FaturamentoView ->
+                    resizeCmd model newSize fetchFaturamento
+
+                PorSetorView ->
                     resizeCmd model newSize (Cmd.batch [ fetchSemRemessa, fetchTempoMedio ])
 
         Refresh newTime ->
@@ -173,9 +200,21 @@ update message model =
                     if model.tick < 2 then
                         ( { model | tick = model.tick + 1 }, Cmd.none )
                     else
-                        ( { model | tick = 0, page = Faturamento }, Navigation.newUrl (toUrl Faturamento) )
+                        ( { model | tick = 0, page = FaturamentoView }, Navigation.newUrl (toUrl FaturamentoView) )
 
-                Faturamento ->
+                FaturamentoView ->
+                    let
+                        newFaturamento =
+                            case model.faturamento of
+                                Just faturamento ->
+                                    Just (tickScrollableBag faturamento 5 10)
+
+                                Nothing ->
+                                    Nothing
+                    in
+                        ( { model | faturamento = newFaturamento }, Cmd.none )
+
+                PorSetorView ->
                     let
                         newSemRemessa =
                             case model.semRemessa of
@@ -207,6 +246,9 @@ update message model =
 
         FetchSuccessSemRemessa semRemessa ->
             ( { model | semRemessa = Just semRemessa }, Cmd.none )
+
+        FetchSuccessFaturamento faturamento ->
+            ( { model | faturamento = Just faturamento }, Cmd.none )
 
 
 setScale : Page -> Cmd Msg
@@ -248,3 +290,8 @@ fetchTempoMedio =
 fetchSemRemessa : Cmd Msg
 fetchSemRemessa =
     getSemRemessa FetchFail FetchSuccessSemRemessa
+
+
+fetchFaturamento : Cmd Msg
+fetchFaturamento =
+    getFaturamento FetchFail FetchSuccessFaturamento

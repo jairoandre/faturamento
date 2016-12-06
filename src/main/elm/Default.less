@@ -25,6 +25,11 @@ body {
 	height: @height;
 	overflow: hidden;
 }
+
+.header--title--faturamento {
+	width: @width;
+}
+
 @listWrapperTempoMedioWidth: @convenioWidth + @quantidadeWidth + @mediaWidth;
 
 .list--wrapper--tempoMedio {
@@ -35,6 +40,10 @@ body {
 .list--wrapper--semRemessa {
 	left: @listWrapperTempoMedioWidth + 10px;
 	width: @listWrapperSemRemessaWidth;
+}
+
+.list--wrapper--faturamento {
+	width: @width;
 }
 
 .header--wrapper {
@@ -54,7 +63,7 @@ body {
 	height: @headerTopHeight;
 	line-height: @headerTopHeight;
 	text-align: center;
-	font-size: 15px;
+	font-size: 25px;
 }
 @logoWidth: 0.15 * @width;
 
@@ -72,6 +81,31 @@ body {
 	background: #0a005d;
 	color: #fff;
 }
+
+@headerTitleFaturamentoSituacaoWidth: @width * 2 / 5;
+
+.header--column--faturamento {
+	position: absolute;
+	text-align: center;
+	font-size: 18px;
+	line-height: @headerBottomHeight;
+	color: #fff;
+	height: @headerBottomHeight;
+}
+
+.header--column--faturamento--situacao {
+	width: @headerTitleFaturamentoSituacaoWidth;
+	background: rgb(78, 17, 250);
+}
+
+@headerTitleFaturamentoPendentesWidth: @width * 3 / 5;
+
+.header--column--faturamento--pendentes {
+	width: @headerTitleFaturamentoPendentesWidth;
+	left: @headerTitleFaturamentoSituacaoWidth;
+	background: rgb(215, 79, 2);
+}
+
 @headerTitleOffset: 0;
 @headerTitleWidth: @convenioWidth + @quantidadeWidth + @mediaWidth;
 
@@ -170,6 +204,13 @@ body {
 	line-height: @rowHeight;
 }
 
+.row--wrapper--faturamento {
+	position: absolute;
+	width: @width;
+	height: @rowHeight * 2;
+	line-height: @rowHeight;
+}
+
 .row--inner--padding {
 	padding-left: 5px;
 	overflow: hidden;
@@ -190,6 +231,10 @@ body {
 .rowLoop (@n, @i:0) when (@i =< @n) {
 	.row--wrapper--@{i} {
 		top: @i * @rowHeight;
+	}
+
+	.row--wrapper--faturamento--@{i} {
+		top: @i * 2 * @rowHeight;
 	}
 	.rowLoop(@n, (@i + 1));
 }
@@ -236,4 +281,8 @@ body {
 
 .span--padding--AMARELO {
 	background-color: rgb(252, 243, 0);
+}
+
+.cell--faturamento--convenio {
+	width: @convenioWidth;
 }
