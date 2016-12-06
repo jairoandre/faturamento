@@ -1,6 +1,7 @@
 package br.com.vah.faturamento.rest;
 
 import br.com.vah.faturamento.dto.*;
+import br.com.vah.faturamento.services.FaturamentoSrv;
 import br.com.vah.faturamento.services.SemRemessaSrv;
 import br.com.vah.faturamento.services.TempoMedioSrv;
 
@@ -24,6 +25,9 @@ public class MainSrv {
   private @Inject
   SemRemessaSrv semRemessaSrv;
 
+  private @Inject
+  FaturamentoSrv faturamentoSrv;
+
   @GET
   @Path("/tempoMedio")
   @Produces("application/json")
@@ -46,5 +50,17 @@ public class MainSrv {
     List<SemRemessaItem> items = semRemessaSrv.recuperarContasSemRemessa();
     semRemessa.setItems(items);
     return semRemessa;
+  }
+
+  @GET
+  @Path("/faturamento")
+  @Produces("application/json")
+  public Faturamento faturamento() {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    Faturamento faturamento = new Faturamento();
+    faturamento.setDate(sdf.format(new Date()));
+    List<FaturamentoGrupo> items = faturamentoSrv.recuperarPainel();
+    faturamento.setItems(items);
+    return faturamento;
   }
 }
