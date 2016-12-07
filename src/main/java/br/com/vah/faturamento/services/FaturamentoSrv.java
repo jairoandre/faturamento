@@ -9,10 +9,7 @@ import javax.ejb.Stateless;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Jairoportela on 05/12/2016.
@@ -210,6 +207,11 @@ public class FaturamentoSrv extends AbstractSrv {
         item.setGe30ValueAvg(numberFormat.format(mediaValor));
       }
     }
+
+    for (FaturamentoGrupo grupo : list) {
+      grupo.getItems().sort((FaturamentoItem i1, FaturamentoItem i2) -> i2.getGe30().compareTo(i1.getGe30()));
+    }
+
     return list;
   }
 

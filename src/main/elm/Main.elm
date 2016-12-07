@@ -207,7 +207,7 @@ update message model =
                         newFaturamento =
                             case model.faturamento of
                                 Just faturamento ->
-                                    Just (tickScrollableBag faturamento 5 10)
+                                    Just (tickScrollableBag faturamento 10 10)
 
                                 Nothing ->
                                     Nothing
@@ -219,7 +219,7 @@ update message model =
                         newSemRemessa =
                             case model.semRemessa of
                                 Just semRemessa ->
-                                    Just (tickTimer semRemessa 5 20)
+                                    Just (tickTimer semRemessa 10 20)
 
                                 Nothing ->
                                     Nothing
@@ -227,7 +227,7 @@ update message model =
                         newTempoMedio =
                             case model.tempoMedio of
                                 Just tempoMedio ->
-                                    Just (tickScrollableBag tempoMedio 5 20)
+                                    Just (tickScrollableBag tempoMedio 10 20)
 
                                 Nothing ->
                                     Nothing

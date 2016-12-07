@@ -10245,16 +10245,24 @@
 		function (idx, item) {
 			var lt30ValueAvg = A2(
 				_user$project$View_Utils$divRightPadding,
-				'cell cell--faturamento--lt30ValueAvg',
+				'cell cell--faturamento--sitValueAvg',
 				_elm_lang$html$Html$text(item.lt30ValueAvg));
 			var ge30ValueAvg = A2(
 				_user$project$View_Utils$divRightPadding,
-				'cell cell--faturamento--ge30ValueAvg',
+				'cell cell--faturamento--sitValueAvg',
 				_elm_lang$html$Html$text(item.ge30ValueAvg));
-			var lt30Avg = A2(_user$project$View_Faturamento$cellFaturamentoInt, 'lt30Avg', item.lt30Avg);
-			var ge30Avg = A2(_user$project$View_Faturamento$cellFaturamentoInt, 'ge30Avg', item.ge30Avg);
-			var lt30 = A2(_user$project$View_Faturamento$cellFaturamentoInt, 'lt30', item.lt30);
-			var ge30 = A2(_user$project$View_Faturamento$cellFaturamentoInt, 'ge30', item.ge30);
+			var lt30Avg = A2(_user$project$View_Faturamento$cellFaturamentoInt, 'sitDaysAvg', item.lt30Avg);
+			var ge30Avg = A2(_user$project$View_Faturamento$cellFaturamentoInt, 'sitDaysAvg', item.ge30Avg);
+			var lt30 = A2(_user$project$View_Faturamento$cellFaturamentoInt, 'sitDays', item.lt30);
+			var ge30 = A2(_user$project$View_Faturamento$cellFaturamentoInt, 'sitDays', item.ge30);
+			var lt30label = A2(
+				_user$project$View_Utils$divRightPadding,
+				'cell cell--faturamento--sitLabel',
+				_elm_lang$html$Html$text('< 30 dias'));
+			var ge30label = A2(
+				_user$project$View_Utils$divRightPadding,
+				'cell cell--faturamento--sitLabel',
+				_elm_lang$html$Html$text('>= 30 dias'));
 			var daysAvg = A2(_user$project$View_Faturamento$cellFaturamentoInt, 'daysAvg', item.daysAvg);
 			var pendentes = A2(_user$project$View_Faturamento$cellFaturamentoInt, 'pendentes', item.pendentes);
 			var convenio = A2(
@@ -10263,7 +10271,7 @@
 				_elm_lang$html$Html$text(item.convenio));
 			var topClass = A2(
 				_elm_lang$core$Basics_ops['++'],
-				'row--wrapper--faturamento--',
+				'row--wrapper--faturamento row--wrapper--faturamento--',
 				_elm_lang$core$Basics$toString(idx));
 			var rowClass = _elm_lang$core$Native_Utils.eq(
 				A2(_elm_lang$core$Basics_ops['%'], idx, 2),
@@ -10292,7 +10300,7 @@
 										_elm_lang$html$Html_Attributes$class('div--wrapper--ge30')
 									]),
 								_elm_lang$core$Native_List.fromArray(
-									[ge30, ge30Avg, ge30ValueAvg])),
+									[ge30label, ge30, ge30Avg, ge30ValueAvg])),
 								A2(
 								_elm_lang$html$Html$div,
 								_elm_lang$core$Native_List.fromArray(
@@ -10300,7 +10308,7 @@
 										_elm_lang$html$Html_Attributes$class('div--wrapper--lt30')
 									]),
 								_elm_lang$core$Native_List.fromArray(
-									[lt30, lt30Avg, lt30ValueAvg]))
+									[lt30label, lt30, lt30Avg, lt30ValueAvg]))
 							])),
 						A2(
 						_elm_lang$html$Html$div,
@@ -10351,7 +10359,7 @@
 									_elm_lang$core$Native_List.fromArray(
 										[
 											_elm_lang$html$Html$text(
-											A2(_elm_lang$core$Basics_ops['++'], 'GUIAS SEM RESPOSTA - ', faturamentoGrupo.title))
+											A2(_elm_lang$core$Basics_ops['++'], 'FATURAMENTO - ', faturamentoGrupo.title))
 										]))
 								])),
 							A2(
@@ -10362,16 +10370,52 @@
 								]),
 							_elm_lang$core$Native_List.fromArray(
 								[
-									A3(
-									_user$project$View_Utils$customDiv,
-									'header--column header--column--faturamento--situacao',
-									'header--inner',
-									_elm_lang$html$Html$text('SITUAÇÃO')),
-									A3(
-									_user$project$View_Utils$customDiv,
-									'header--column header--column--faturamento--pendentes',
-									'header--inner--right',
-									_elm_lang$html$Html$text('GUIAS PENDENTES'))
+									A2(
+									_elm_lang$html$Html$div,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('header--column--faturamento header--column--faturamento--situacao')
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(
+											_user$project$View_Utils$divLeftPadding,
+											'header--maintitle header--fat--sit--title',
+											_elm_lang$html$Html$text('SITUAÇÃO REMESSAS (MV)')),
+											A2(
+											_user$project$View_Utils$divRightPadding,
+											'header--subtitle header--fat--sit--faixa',
+											_elm_lang$html$Html$text('FAIXA')),
+											A2(
+											_user$project$View_Utils$divRightPadding,
+											'header--subtitle header--fat--sit--qtd',
+											_elm_lang$html$Html$text('QTD')),
+											A2(
+											_user$project$View_Utils$divRightPadding,
+											'header--subtitle header--fat--sit--daysAvg',
+											_elm_lang$html$Html$text('MÉDIA DIAS')),
+											A2(
+											_user$project$View_Utils$divRightPadding,
+											'header--subtitle header--fat--sit--valueAvg',
+											_elm_lang$html$Html$text('MÉDIA VALOR'))
+										])),
+									A2(
+									_elm_lang$html$Html$div,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('header--column--faturamento header--column--faturamento--pendentes')
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(
+											_user$project$View_Utils$divRightPadding,
+											'header--titleh2 header--fat--pend--title',
+											_elm_lang$html$Html$text('PENDENTES')),
+											A2(
+											_user$project$View_Utils$divRightPadding,
+											'header--titleh2 header--fat--pend--resp',
+											_elm_lang$html$Html$text('MÉDIA RESP.'))
+										]))
 								]))
 						])),
 					A2(
@@ -10646,7 +10690,7 @@
 								var _p9 = model.faturamento;
 								if (_p9.ctor === 'Just') {
 									return _elm_lang$core$Maybe$Just(
-										A3(_user$project$Model_Utils$tickScrollableBag, _p9._0, 5, 10));
+										A3(_user$project$Model_Utils$tickScrollableBag, _p9._0, 10, 10));
 								} else {
 									return _elm_lang$core$Maybe$Nothing;
 								}
@@ -10663,7 +10707,7 @@
 								var _p10 = model.tempoMedio;
 								if (_p10.ctor === 'Just') {
 									return _elm_lang$core$Maybe$Just(
-										A3(_user$project$Model_Utils$tickScrollableBag, _p10._0, 5, 20));
+										A3(_user$project$Model_Utils$tickScrollableBag, _p10._0, 10, 20));
 								} else {
 									return _elm_lang$core$Maybe$Nothing;
 								}
@@ -10672,7 +10716,7 @@
 								var _p11 = model.semRemessa;
 								if (_p11.ctor === 'Just') {
 									return _elm_lang$core$Maybe$Just(
-										A3(_user$project$Model_Utils$tickTimer, _p11._0, 5, 20));
+										A3(_user$project$Model_Utils$tickTimer, _p11._0, 10, 20));
 								} else {
 									return _elm_lang$core$Maybe$Nothing;
 								}

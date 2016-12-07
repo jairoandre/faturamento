@@ -55,7 +55,7 @@ body {
 	color: #777;
 	text-align: center;
 }
-@headerTopHeight: 50px;
+@headerTopHeight: 35px;
 
 .header--wrapper--top {
 	position: absolute;
@@ -78,19 +78,19 @@ body {
 
 .header--title {
 	position: absolute;
-	background: #0a005d;
+	background: #002e5d;
 	color: #fff;
 }
 
-@headerTitleFaturamentoSituacaoWidth: @width * 2 / 5;
+@headerTitleFaturamentoSituacaoWidth: 800px;
 
 .header--column--faturamento {
 	position: absolute;
 	text-align: center;
 	font-size: 18px;
 	line-height: @headerBottomHeight;
-	color: #fff;
 	height: @headerBottomHeight;
+	color: #fff;
 }
 
 .header--column--faturamento--situacao {
@@ -98,7 +98,7 @@ body {
 	background: rgb(78, 17, 250);
 }
 
-@headerTitleFaturamentoPendentesWidth: @width * 3 / 5;
+@headerTitleFaturamentoPendentesWidth: 400px;
 
 .header--column--faturamento--pendentes {
 	width: @headerTitleFaturamentoPendentesWidth;
@@ -127,7 +127,7 @@ body {
 	width: @headerDateWidth;
 	left: @headerDateOffset;
 }
-@headerBottomHeight: 25px;
+@headerBottomHeight: 40px;
 
 .header--wrapper--bottom {
 	position: absolute;
@@ -264,6 +264,65 @@ body {
 	left: @mediaValorLeft;
 }
 
+.div--wrapper--ge30 {
+	position: absolute;
+	left: @convenioFatWidth;
+}
+
+.div--wrapper--lt30 {
+	position: absolute;
+	left: @convenioFatWidth;
+	top: @rowHeight;
+}
+
+@sitLabelWidth: 100px;
+
+.cell--faturamento--sitLabel {
+	width: @sitLabelWidth;
+	text-align: right;
+}
+
+@sitDaysWidth: 75px;
+@sitDaysOffset: @sitLabelWidth;
+
+.cell--faturamento--sitDays {
+	left: @sitDaysOffset;
+	width: @sitDaysWidth;
+}
+
+@sitDaysAvgWidth: 100px;
+@sitDaysAvgOffset: @sitDaysWidth + @sitDaysOffset;
+
+.cell--faturamento--sitDaysAvg {
+	left: @sitDaysAvgOffset;
+	width: @sitDaysAvgWidth;
+}
+
+@sitValueAvgWidth: 125px;
+@sitValueAvgOffset: @sitDaysAvgWidth + @sitDaysAvgOffset;
+
+.cell--faturamento--sitValueAvg {
+	left: @sitValueAvgOffset;
+	width: @sitValueAvgWidth;
+}
+
+.cell--wrapper--faturamento--pendentes {
+	position: absolute;
+	line-height: @rowHeight * 2;
+	font-size: 30px;
+	left: 800px;
+}
+
+
+.cell--faturamento--pendentes, .header--fat--pend--title {
+		width: 200px;
+}
+
+.cell--faturamento--daysAvg, .header--fat--pend--resp {
+		width: 200px;
+		left: 200px;
+}
+
 .span--padding {
 	padding: 2px 10px;
 	border-radius: 5px;
@@ -283,6 +342,70 @@ body {
 	background-color: rgb(252, 243, 0);
 }
 
+@convenioFatWidth: 400px;
+
 .cell--faturamento--convenio {
-	width: @convenioWidth;
+	width: @convenioFatWidth;
+	height: @rowHeight * 2;
+	line-height: @rowHeight * 2;
+	font-size: 25px;
+}
+
+.header--maintitle {
+	position: absolute;
+	font-size: 25px;
+	font-style: italic;
+	text-align: left;
+}
+
+.header--titleh2 {
+	position: absolute;
+	font-size: 20px;
+	font-style: italic;
+	text-align: right;
+}
+
+.header--fat--sit--title {
+	width: @convenioFatWidth;
+}
+
+.header--fat--pend--title {
+}
+
+.header--subtitle {
+	position: absolute;
+	text-align: right;
+	font-size: 15px;
+}
+
+@headerFaixaWidth: @sitLabelWidth;
+@headerFaixaOffset: @convenioFatWidth;
+
+.header--fat--sit--faixa {
+	width: @headerFaixaWidth;
+	left: @headerFaixaOffset;
+}
+
+@headerFatQtdWidth: @sitDaysWidth;
+@headerFatQtdOffset: @headerFaixaWidth + @headerFaixaOffset;
+
+.header--fat--sit--qtd {
+	width: @headerFatQtdWidth;
+	left: @headerFatQtdOffset;
+}
+
+@headerFatDaysAvgWidth: @sitDaysAvgWidth;
+@headerFatDaysAvgOffset: @headerFatQtdWidth + @headerFatQtdOffset;
+
+.header--fat--sit--daysAvg {
+	width: @headerFatDaysAvgWidth;
+	left: @headerFatDaysAvgOffset;
+}
+
+@headerFatValueAvgWidth: @sitValueAvgWidth;
+@headerFatValueAvgOffset: @headerFatDaysAvgWidth + @headerFatDaysAvgOffset;
+
+.header--fat--sit--valueAvg {
+	width: @headerFatValueAvgWidth;
+	left: @headerFatValueAvgOffset;
 }
