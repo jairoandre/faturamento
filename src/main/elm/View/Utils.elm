@@ -14,9 +14,9 @@ customDiv wrapperClass innerClass elem =
 
 divLeftPadding : String -> Html a -> Html a
 divLeftPadding wrapperClass elem =
-    customDiv wrapperClass "row--inner--padding" elem
+    customDiv wrapperClass "lPadd" elem
 
 
 divRightPadding : String -> Html a -> Html a
 divRightPadding wrapperClass elem =
-    customDiv wrapperClass "row--inner--padding--right" elem
+    customDiv wrapperClass "rPadd" elem

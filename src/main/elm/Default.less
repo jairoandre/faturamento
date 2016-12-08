@@ -17,395 +17,201 @@ body {
 	height: @height;
 	background-image: linear-gradient(-200deg, #220065 0%, #2b546d 100%);
 }
-@headerHeight: 75px;
 
-.list--wrapper {
+@headerHeight: 75px;
+@headerInnerHeight: @headerHeight / 3;
+.list {
+  position: relative;
+  width: @width;
+  height: @height;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  width: @width;
+  height: @headerHeight;
+}
+
+.header__title {
+	position: absolute;
+  background: rgb(10, 62, 122);
+  text-align: center;
+  color: #fff;
+	width: @width;
+  height: @headerInnerHeight;
+  line-height: @headerInnerHeight;
+  font-size: 20px;
+}
+
+.rCount {
 	position: absolute;
 	top: 0;
-	height: @height;
-	overflow: hidden;
-}
-
-.header--title--faturamento {
-	width: @width;
-}
-
-@listWrapperTempoMedioWidth: @convenioWidth + @quantidadeWidth + @mediaWidth;
-
-.list--wrapper--tempoMedio {
-	width: @listWrapperTempoMedioWidth;
-}
-@listWrapperSemRemessaWidth: @convenioWidth + @quantidadeWidth + @mediaWidth + @mediaValorWidth;
-
-.list--wrapper--semRemessa {
-	left: @listWrapperTempoMedioWidth + 10px;
-	width: @listWrapperSemRemessaWidth;
-}
-
-.list--wrapper--faturamento {
-	width: @width;
-}
-
-.header--wrapper {
-	position: absolute;
-	width: @width;
-	height: @headerHeight;
-	line-height: @headerHeight;
-	font-size: @headerHeight;
-	color: #777;
-	text-align: center;
-}
-@headerTopHeight: 35px;
-
-.header--wrapper--top {
-	position: absolute;
-	width: @width;
-	height: @headerTopHeight;
-	line-height: @headerTopHeight;
-	text-align: center;
-	font-size: 25px;
-}
-@logoWidth: 0.15 * @width;
-
-.header--logo {
-	position: absolute;
-	width: @logoWidth;
-}
-
-.header--logo img {
-	width: 0.10 * @width;
-}
-
-.header--title {
-	position: absolute;
-	background: #002e5d;
-	color: #fff;
-}
-
-@headerTitleFaturamentoSituacaoWidth: 800px;
-
-.header--column--faturamento {
-	position: absolute;
-	text-align: center;
-	font-size: 18px;
-	line-height: @headerBottomHeight;
-	height: @headerBottomHeight;
-	color: #fff;
-}
-
-.header--column--faturamento--situacao {
-	width: @headerTitleFaturamentoSituacaoWidth;
-	background: rgb(78, 17, 250);
-}
-
-@headerTitleFaturamentoPendentesWidth: 400px;
-
-.header--column--faturamento--pendentes {
-	width: @headerTitleFaturamentoPendentesWidth;
-	left: @headerTitleFaturamentoSituacaoWidth;
-	background: rgb(215, 79, 2);
-}
-
-@headerTitleOffset: 0;
-@headerTitleWidth: @convenioWidth + @quantidadeWidth + @mediaWidth;
-
-.header--title--tempoMedio {
-	width: @headerTitleWidth;
-	left: @headerTitleOffset;
-}
-@headerTitleSemRemessaWidth: @headerTitleWidth + @mediaValorWidth;
-
-.header--title--semRemessa {
-	width: @headerTitleSemRemessaWidth;
-	left: @headerTitleOffset;
-}
-@headerDateOffset: @headerTitleOffset + @headerTitleWidth;
-@headerDateWidth: 0.15 * @width;
-
-.header--date {
-	position: absolute;
-	width: @headerDateWidth;
-	left: @headerDateOffset;
-}
-@headerBottomHeight: 40px;
-
-.header--wrapper--bottom {
-	position: absolute;
-	width: @width;
-	height: @headerBottomHeight;
-	top: @headerTopHeight;
-	background: #3779d0;
-}
-
-.header--column {
-	position: absolute;
-	line-height: @headerBottomHeight;
-	color: #fff;
-	font-size: 10px;
-	text-align: left;
-}
-
-.header--inner {
-	padding-left: 5px;
-}
-
-.header--inner--border--right {
-	border-right: 1px solid #fff;
-}
-
-.header--inner--right {
+	right: 0;
+	height: @headerInnerHeight;
+  line-height: @headerInnerHeight;
+  font-size: 15px;
 	padding-right: 5px;
+}
+.header__columns {
+  position: absolute;
+  top: @headerInnerHeight;
+  width: @width;
+  height: @headerInnerHeight * 2;
+  font-size: 15px;
+  text-align: right;
+}
+
+.header__column {
+  position: absolute;
+  background: rgb(54, 41, 203);
+  line-height: 25px;
+  color: #fff;
+}
+
+.header__column--t25 {
+	top: 25px;
+}
+
+@convenioW: 300px;
+@convenioOff: 0;
+.header__column--convenio, .row--convenio {
+  line-height: 50px;
+  width: @convenioW;
+  font-size: 30px;
+  text-align: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@ge30W: 350px;
+@ge30Off: @convenioW;
+.header__column--ge30 {
+  background: rgb(112, 41, 203);
+  left: @ge30Off;
+  width: @ge30W;
+}
+
+@ge30QtdW: 100px;
+@ge30QtdOff: @convenioW;
+.header__column--ge30Qtd, .row--ge30Qtd {
+  left: @ge30QtdOff;
+  width: @ge30QtdW;
+}
+
+@ge30DaysAvgW: 100px;
+@ge30DaysAvgOff: @ge30QtdW + @ge30QtdOff;
+.header__column--ge30DaysAvg, .row--ge30DaysAvg {
+	left: @ge30DaysAvgOff;
+  width: @ge30DaysAvgW;
+}
+
+@ge30ValueAvgW: 150px;
+@ge30ValueAvgOff: @ge30DaysAvgW + @ge30DaysAvgOff;
+.header__column--ge30ValueAvg, .row--ge30ValueAvg {
+	left: @ge30ValueAvgOff;
+  width: @ge30ValueAvgW;
+}
+
+@lt30W: 350px;
+@lt30Off: @ge30ValueAvgW + @ge30ValueAvgOff;
+.header__column--lt30 {
+  background: rgb(156, 41, 203);
+  left: @lt30Off;
+  width: @lt30W;
+}
+
+.header__column--lt30--title {
+	background: rgb(156, 41, 203);
+}
+
+@lt30QtdW: 100px;
+@lt30QtdOff: @lt30Off;
+.header__column--lt30Qtd, .row--lt30Qtd {
+	left: @lt30QtdOff;
+  width: @lt30QtdW;
+}
+
+@lt30DaysAvgW: 100px;
+@lt30DaysAvgOff: @lt30QtdW + @lt30QtdOff;
+.header__column--lt30DaysAvg, .row--lt30DaysAvg {
+  left: @lt30DaysAvgOff;
+  width: @lt30DaysAvgW;
+}
+
+@lt30ValueAvgW: 150px;
+@lt30ValueAvgOff: @lt30DaysAvgW + @lt30DaysAvgOff;
+.header__column--lt30ValueAvg, .row--lt30ValueAvg {
+  left: @lt30ValueAvgOff;
+  width: @lt30ValueAvgW;
+}
+
+@pendentesW: 200px;
+@pendentesOff: @lt30ValueAvgW + @lt30ValueAvgOff;
+.header__column--pendentes {
+  background: rgb(203, 41, 123);
+  left: @pendentesOff;
+  width: @pendentesW;
+}
+
+@qtdPendentesW: 100px;
+@qtdPendentesOff: @pendentesOff;
+.header__column--qtdPendentes, .row--qtdPendentes {
+	left: @qtdPendentesOff;
+  width: @qtdPendentesW;
+}
+
+@avgPendentesW: 100px;
+@avgPendentesOff: @qtdPendentesW + @qtdPendentesOff;
+.header__column--avgPendentes, .row--avgPendentes {
+  left: @avgPendentesOff;
+  width: @avgPendentesW;
+}
+
+.lPadd {
+  padding-left: 5px;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.rPadd {
+  padding-right: 5px;
 	text-align: right;
 }
-@convenioWidth: 220px;
 
-.header--column--convenio {
-	width: @convenioWidth;
-}
-@quantidadeWidth: 100px;
-@quantidadeLeft: @convenioWidth;
-
-.header--column--quantidade {
-	width: @quantidadeWidth;
-	left: @quantidadeLeft;
-}
-@mediaWidth: 70px;
-@mediaLeft: @quantidadeWidth + @quantidadeLeft;
-
-.header--column--media {
-	width: @mediaWidth;
-	left: @mediaLeft;
-}
-@mediaValorWidth: 125px;
-@mediaValorLeft: @mediaWidth + @mediaLeft;
-
-.header--column--mediaValor {
-	width: @mediaValorWidth;
-	left: @mediaValorLeft;
-}
-// CONTENT
-@contentHeight: @height - @headerHeight;
-@contentTop: @headerHeight;
-
-.content--wrapper {
+.content {
 	position: absolute;
+	top: 75px;
 	width: @width;
-	height: @contentHeight;
-	top: @contentTop;
-	min-height: 100vh;
-	color: #fff;
+	height: 600px;
 }
-@rowHeight: 30px;
+
+@rowHeight: 50px;
 
 .row--wrapper {
 	position: absolute;
 	width: @width;
 	height: @rowHeight;
 	line-height: @rowHeight;
+	font-size: 20px;
 }
 
-.row--wrapper--faturamento {
+.row {
 	position: absolute;
-	width: @width;
-	height: @rowHeight * 2;
+	height: @rowHeight;
 	line-height: @rowHeight;
 }
 
-.row--inner--padding {
-	padding-left: 5px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-.row--inner--padding--right {
-	padding-right: 5px;
-	text-align: right;
-}
-
-.row--wrapper--zebra {
-	background: rgba(1, 4, 85, 0.5);
-}
 .rowLoop(20);
 
 .rowLoop (@n, @i:0) when (@i =< @n) {
-	.row--wrapper--@{i} {
+	.row--@{i} {
 		top: @i * @rowHeight;
-	}
-
-	.row--wrapper--faturamento--@{i} {
-		top: @i * 2 * @rowHeight;
 	}
 	.rowLoop(@n, (@i + 1));
 }
-// CABEÇALHO
-.cell {
-	position: absolute;
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
 
-.cell--convenio {
-	width: @convenioWidth;
-}
-
-.cell--quantidade {
-	width: @quantidadeWidth;
-	left: @quantidadeLeft;
-}
-
-.cell--media {
-	width: @mediaWidth;
-	left: @mediaLeft;
-}
-
-.cell--mediaValor {
-	width: @mediaValorWidth;
-	left: @mediaValorLeft;
-}
-
-.div--wrapper--ge30 {
-	position: absolute;
-	left: @convenioFatWidth;
-}
-
-.div--wrapper--lt30 {
-	position: absolute;
-	left: @convenioFatWidth;
-	top: @rowHeight;
-}
-
-@sitLabelWidth: 100px;
-
-.cell--faturamento--sitLabel {
-	width: @sitLabelWidth;
-	text-align: right;
-}
-
-@sitDaysWidth: 75px;
-@sitDaysOffset: @sitLabelWidth;
-
-.cell--faturamento--sitDays {
-	left: @sitDaysOffset;
-	width: @sitDaysWidth;
-}
-
-@sitDaysAvgWidth: 100px;
-@sitDaysAvgOffset: @sitDaysWidth + @sitDaysOffset;
-
-.cell--faturamento--sitDaysAvg {
-	left: @sitDaysAvgOffset;
-	width: @sitDaysAvgWidth;
-}
-
-@sitValueAvgWidth: 125px;
-@sitValueAvgOffset: @sitDaysAvgWidth + @sitDaysAvgOffset;
-
-.cell--faturamento--sitValueAvg {
-	left: @sitValueAvgOffset;
-	width: @sitValueAvgWidth;
-}
-
-.cell--wrapper--faturamento--pendentes {
-	position: absolute;
-	line-height: @rowHeight * 2;
-	font-size: 30px;
-	left: 800px;
-}
-
-
-.cell--faturamento--pendentes, .header--fat--pend--title {
-		width: 200px;
-}
-
-.cell--faturamento--daysAvg, .header--fat--pend--resp {
-		width: 200px;
-		left: 200px;
-}
-
-.span--padding {
-	padding: 2px 10px;
-	border-radius: 5px;
-	color: #fff;
-	text-shadow: 1px 1px 1px #111;
-}
-
-.span--padding--VERMELHO {
-	background-color: rgb(238, 32, 38);
-}
-
-.span--padding--VERDE {
-	background-color: rgb(0, 238, 14);
-}
-
-.span--padding--AMARELO {
-	background-color: rgb(252, 243, 0);
-}
-
-@convenioFatWidth: 400px;
-
-.cell--faturamento--convenio {
-	width: @convenioFatWidth;
-	height: @rowHeight * 2;
-	line-height: @rowHeight * 2;
-	font-size: 25px;
-}
-
-.header--maintitle {
-	position: absolute;
-	font-size: 25px;
-	font-style: italic;
-	text-align: left;
-}
-
-.header--titleh2 {
-	position: absolute;
-	font-size: 20px;
-	font-style: italic;
-	text-align: right;
-}
-
-.header--fat--sit--title {
-	width: @convenioFatWidth;
-}
-
-.header--fat--pend--title {
-}
-
-.header--subtitle {
-	position: absolute;
-	text-align: right;
-	font-size: 15px;
-}
-
-@headerFaixaWidth: @sitLabelWidth;
-@headerFaixaOffset: @convenioFatWidth;
-
-.header--fat--sit--faixa {
-	width: @headerFaixaWidth;
-	left: @headerFaixaOffset;
-}
-
-@headerFatQtdWidth: @sitDaysWidth;
-@headerFatQtdOffset: @headerFaixaWidth + @headerFaixaOffset;
-
-.header--fat--sit--qtd {
-	width: @headerFatQtdWidth;
-	left: @headerFatQtdOffset;
-}
-
-@headerFatDaysAvgWidth: @sitDaysAvgWidth;
-@headerFatDaysAvgOffset: @headerFatQtdWidth + @headerFatQtdOffset;
-
-.header--fat--sit--daysAvg {
-	width: @headerFatDaysAvgWidth;
-	left: @headerFatDaysAvgOffset;
-}
-
-@headerFatValueAvgWidth: @sitValueAvgWidth;
-@headerFatValueAvgOffset: @headerFatDaysAvgWidth + @headerFatDaysAvgOffset;
-
-.header--fat--sit--valueAvg {
-	width: @headerFatValueAvgWidth;
-	left: @headerFatValueAvgOffset;
+.row--zebra {
+	background: rgba(1, 4, 85, 0.5);
 }

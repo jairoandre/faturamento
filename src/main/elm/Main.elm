@@ -41,6 +41,7 @@ type alias Model =
     , scale : Float
     , size : Window.Size
     , tick : Int
+    , refreshCount : Int
     }
 
 
@@ -66,7 +67,7 @@ init result =
         t =
             Debug.log (toString result) 0
     in
-        urlUpdate result (Model Home Nothing Nothing Nothing 1 { width = 0, height = 0 } 0)
+        urlUpdate result (Model Home Nothing Nothing Nothing 1 { width = 0, height = 0 } 0 0)
 
 
 urlUpdate : Result String Page -> Model -> ( Model, Cmd Msg )
@@ -137,7 +138,7 @@ view model =
                                     text "Carregando..."
 
                                 Just f ->
-                                    faturamentoHtml f
+                                    faturamentoHtml f model.refreshCount
                     in
                         div [] [ faturamento ]
 
@@ -192,7 +193,7 @@ update message model =
                     resizeCmd model newSize (Cmd.batch [ fetchSemRemessa, fetchTempoMedio ])
 
         Refresh newTime ->
-            ( model, Cmd.batch [ fetchSemRemessa, fetchTempoMedio ] )
+            ( model, fetchFaturamento )
 
         TickTime newTime ->
             case model.page of
@@ -212,7 +213,7 @@ update message model =
                                 Nothing ->
                                     Nothing
                     in
-                        ( { model | faturamento = newFaturamento }, Cmd.none )
+                        ( { model | faturamento = newFaturamento, refreshCount = model.refreshCount - 1 }, Cmd.none )
 
                 PorSetorView ->
                     let
@@ -248,7 +249,7 @@ update message model =
             ( { model | semRemessa = Just semRemessa }, Cmd.none )
 
         FetchSuccessFaturamento faturamento ->
-            ( { model | faturamento = Just faturamento }, Cmd.none )
+            ( { model | faturamento = Just faturamento, refreshCount = 300 }, Cmd.none )
 
 
 setScale : Page -> Cmd Msg
