@@ -40,7 +40,7 @@ public class FaturamentoSrv extends AbstractSrv {
             "        END           AS MEDIA, " +
             "        CASE " +
             "        WHEN (S.NM_SETOR = 'PRONTO SOCORRO') " +
-            "          THEN 'PS' " +
+            "          THEN 'PRONTO SOCORRO' " +
             "        WHEN (S.NM_SETOR <> 'PRONTO SOCORRO') " +
             "          THEN 'INTERNAÇÃO' " +
             "        END           AS GRUPO " +
@@ -91,7 +91,7 @@ public class FaturamentoSrv extends AbstractSrv {
         "  STATUS, " +
         "  COUNT(*)                      QTD,   " +
         "  TRUNC(AVG(QTDE_DIAS))         MEDIA_DIAS,   " +
-        "  ROUND(AVG(VL_TOTAL_CONTA), 2) MEDIA_VALOR " +
+        "  ROUND(SUM(VL_TOTAL_CONTA), 2) MEDIA_VALOR " +
         "FROM (   " +
         "  SELECT " +
         "    'INTERNAÇÃO' GRUPO, " +
@@ -122,7 +122,7 @@ public class FaturamentoSrv extends AbstractSrv {
         "  SELECT " +
         "    (CASE " +
         "     WHEN (TP_ATENDIMENTO = 'U') " +
-        "       THEN 'PS' " +
+        "       THEN 'PRONTO SOCORRO' " +
         "     WHEN (TP_ATENDIMENTO = 'E') " +
         "       THEN 'EXTERNO' " +
         "     END) GRUPO, " +
@@ -136,13 +136,13 @@ public class FaturamentoSrv extends AbstractSrv {
         "          TRUNC(SYSDATE - D.DT_ATENDIMENTO) " +
         "    END) QTDE_DIAS, " +
         "    (CASE " +
-        "     WHEN (TP_ATENDIMENTO = 'E' AND TRUNC(SYSDATE - D.DT_ALTA) < 30) " +
+        "     WHEN (TP_ATENDIMENTO = 'E' AND TRUNC(SYSDATE - D.DT_ATENDIMENTO) < 30) " +
         "       THEN 'LT30' " +
-        "     WHEN (TP_ATENDIMENTO = 'U' AND TRUNC(SYSDATE - D.DT_ATENDIMENTO) < 30) " +
+        "     WHEN (TP_ATENDIMENTO = 'U' AND TRUNC(SYSDATE - D.DT_ALTA) < 30) " +
         "       THEN 'LT30' " +
-        "     WHEN (TP_ATENDIMENTO = 'E' AND TRUNC(SYSDATE - D.DT_ALTA) >= 30) " +
+        "     WHEN (TP_ATENDIMENTO = 'E' AND TRUNC(SYSDATE - D.DT_ATENDIMENTO) >= 30) " +
         "       THEN 'GE30' " +
-        "     WHEN (TP_ATENDIMENTO = 'U' AND TRUNC(SYSDATE - D.DT_ATENDIMENTO) >= 30) " +
+        "     WHEN (TP_ATENDIMENTO = 'U' AND TRUNC(SYSDATE - D.DT_ALTA) >= 30) " +
         "       THEN 'GE30' " +
         "     END) STATUS, " +
         "    T.VL_TOTAL_CONTA   " +
@@ -153,11 +153,10 @@ public class FaturamentoSrv extends AbstractSrv {
         "      ON T.CD_CONVENIO = C.CD_CONVENIO   " +
         "    LEFT JOIN DBAMV.TB_ATENDIME D " +
         "      ON B.CD_ATENDIMENTO = D.CD_ATENDIMENTO " +
-        "  WHERE D.DT_ALTA IS NOT NULL   " +
-        "        AND T.CD_REMESSA IS NULL   " +
+        "  WHERE T.CD_REMESSA IS NULL   " +
         "        AND T.CD_MULTI_EMPRESA = 1   " +
         "        AND T.CD_CONVENIO <> 1   " +
-        "        AND D.TP_ATENDIMENTO IN ('U', 'E') " +
+        "        AND ((D.DT_ALTA IS NULL AND D.TP_ATENDIMENTO = 'E') OR (D.DT_ALTA IS NOT NULL AND D.TP_ATENDIMENTO = 'U')) " +
         "        AND T.VL_TOTAL_CONTA > 0   " +
         "        AND D.DT_ATENDIMENTO >= TO_DATE('01-01-2016', 'DD-MM-YYYY'))   " +
         "GROUP BY   " +
@@ -186,8 +185,9 @@ public class FaturamentoSrv extends AbstractSrv {
 
       FaturamentoGrupo grupo = grupos.get(grupoKey);
       if (grupo == null) {
+        grupo = new FaturamentoGrupo();
         grupo.setTitle(grupoKey);
-        grupos.put(grupoKey, new FaturamentoGrupo());
+        grupos.put(grupoKey, grupo);
         list.add(grupo);
       }
       FaturamentoItem item = items.get(grupoItemKey);
@@ -209,7 +209,7 @@ public class FaturamentoSrv extends AbstractSrv {
     }
 
     for (FaturamentoGrupo grupo : list) {
-      grupo.getItems().sort((FaturamentoItem i1, FaturamentoItem i2) -> i2.getGe30().compareTo(i1.getGe30()));
+      grupo.getItems().sort((FaturamentoItem i1, FaturamentoItem i2) -> i2.getGe30() == i1.getGe30() ? i2.getLt30() - i1.getLt30() : i2.getGe30() - i1.getGe30());
     }
 
     return list;

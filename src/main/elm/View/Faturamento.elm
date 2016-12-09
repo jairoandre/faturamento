@@ -40,15 +40,15 @@ faturamentoGrupoToHtml faturamentoGrupo rCount =
                     ]
                 , div [ class "header__columns" ]
                     [ divLeftPadding "header__column header__column--convenio" <| text "CONVÊNIO"
-                    , divRightPadding "header__column header__column--ge30" <| text "CONTAS ABERTAS >= 30 DIAS"
+                    , divRightPadding "header__column header__column--ge30 header__column--ge30Title" <| text "CONTAS ABERTAS >= 30 DIAS"
                     , divRightPadding "header__column header__column--t25 header__column--ge30 header__column--ge30Qtd" <| text "QTD"
                     , divRightPadding "header__column header__column--t25 header__column--ge30 header__column--ge30DaysAvg" <| text "MÉD. DIAS"
-                    , divRightPadding "header__column header__column--t25 header__column--ge30 header__column--ge30ValueAvg" <| text "MÉD. VALOR"
+                    , divRightPadding "header__column header__column--t25 header__column--ge30 header__column--ge30ValueAvg" <| text "TOTAL VALOR"
                     , divRightPadding "header__column header__column--lt30 header__column--lt30Title" <| text "CONTAS ABERTAS < 30 DIAS"
                     , divRightPadding "header__column header__column--t25 header__column--lt30 header__column--lt30Qtd" <| text "QTD"
                     , divRightPadding "header__column header__column--t25 header__column--lt30 header__column--lt30DaysAvg" <| text "MÉD. DIAS"
-                    , divRightPadding "header__column header__column--t25 header__column--lt30 header__column--lt30ValueAvg" <| text "MÉD. VALOR"
-                    , divRightPadding "header__column header__column--pendentes" <| text "GUIAS PENDENTES"
+                    , divRightPadding "header__column header__column--t25 header__column--lt30 header__column--lt30ValueAvg" <| text "TOTAL VALOR"
+                    , divRightPadding "header__column header__column--pendentes header__column--pendentesTitle" <| text "GUIAS PENDENTES"
                     , divRightPadding "header__column header__column--t25 header__column--pendentes header__column--qtdPendentes" <| text "QTD"
                     , divRightPadding "header__column header__column--t25 header__column--pendentes header__column--avgPendentes" <| text "MÉD. DIAS"
                     ]
@@ -61,6 +61,11 @@ faturamentoGrupoToHtml faturamentoGrupo rCount =
 cellFaturamentoInt : String -> Int -> Html a
 cellFaturamentoInt f n =
     divRightPadding f <| text <| toString <| n
+
+
+bgDiv : String -> String -> Html a
+bgDiv col bg =
+    div [ class ("row row--" ++ col ++ " row--" ++ bg) ] []
 
 
 faturamentoItemToHtml : Int -> FaturamentoItem -> Html a
@@ -104,12 +109,20 @@ faturamentoItemToHtml idx item =
     in
         div [ class rowClass ]
             [ convenio
+            , bgDiv "ge30Qtd" "redBg"
             , ge30
+            , bgDiv "ge30DaysAvg" "redBg"
             , ge30Avg
+            , bgDiv "ge30ValueAvg" "redBg"
             , ge30ValueAvg
+            , bgDiv "lt30Qtd" "greenBg"
             , lt30
+            , bgDiv "lt30DaysAvg" "greenBg"
             , lt30Avg
+            , bgDiv "lt30ValueAvg" "greenBg"
             , lt30ValueAvg
+            , bgDiv "qtdPendentes" "pinkBg"
             , pendentes
+            , bgDiv "avgPendentes" "pinkBg"
             , daysAvg
             ]

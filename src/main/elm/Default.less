@@ -8,6 +8,7 @@ body {
 	width: @width;
 	height: @height;
 	color: #fff;
+  text-shadow: 3px 3px 5px #000;
 }
 
 .app--wrapper {
@@ -84,12 +85,32 @@ body {
 	text-overflow: ellipsis;
 }
 
+.darkBg {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.row--redBg {
+	background: rgba(203, 60, 41, 0.3);
+}
+
+.row--greenBg {
+	background: rgba(68, 190, 10, 0.3);
+}
+
+.row--pinkBg {
+	background: rgba(203, 41, 123, 0.3);
+}
+
 @ge30W: 350px;
 @ge30Off: @convenioW;
 .header__column--ge30 {
-  background: rgb(112, 41, 203);
+  background: rgb(203, 60, 41);
   left: @ge30Off;
   width: @ge30W;
+}
+
+.header__column--ge30Title {
+	background: rgb(112, 32, 22);
 }
 
 @ge30QtdW: 100px;
@@ -116,13 +137,13 @@ body {
 @lt30W: 350px;
 @lt30Off: @ge30ValueAvgW + @ge30ValueAvgOff;
 .header__column--lt30 {
-  background: rgb(156, 41, 203);
+  background: rgb(68, 190, 10);
   left: @lt30Off;
   width: @lt30W;
 }
 
-.header__column--lt30--title {
-	background: rgb(156, 41, 203);
+.header__column--lt30Title {
+	background: rgb(36, 98, 6);
 }
 
 @lt30QtdW: 100px;
@@ -152,6 +173,10 @@ body {
   background: rgb(203, 41, 123);
   left: @pendentesOff;
   width: @pendentesW;
+}
+
+.header__column--pendentesTitle {
+  background: rgb(121, 23, 73);
 }
 
 @qtdPendentesW: 100px;
@@ -194,7 +219,7 @@ body {
 	width: @width;
 	height: @rowHeight;
 	line-height: @rowHeight;
-	font-size: 20px;
+	font-size: 18px;
 }
 
 .row {

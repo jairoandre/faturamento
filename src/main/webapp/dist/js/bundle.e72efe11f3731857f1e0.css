@@ -1,0 +1,243 @@
+body {
+  margin: 0;
+  font-family: Helvetica;
+  overflow: hidden;
+  width: 1200px;
+  height: 675px;
+  color: #fff;
+  text-shadow: 3px 3px 5px #000;
+}
+.app--wrapper {
+  position: relative;
+  transform-origin: top left;
+  width: 1200px;
+  height: 675px;
+  background-image: linear-gradient(-200deg, #220065 0%, #2b546d 100%);
+}
+.list {
+  position: relative;
+  width: 1200px;
+  height: 675px;
+}
+.header {
+  position: absolute;
+  top: 0;
+  width: 1200px;
+  height: 75px;
+}
+.header__title {
+  position: absolute;
+  background: #0a3e7a;
+  text-align: center;
+  color: #fff;
+  width: 1200px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 20px;
+}
+.rCount {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 25px;
+  line-height: 25px;
+  font-size: 15px;
+  padding-right: 5px;
+}
+.header__columns {
+  position: absolute;
+  top: 25px;
+  width: 1200px;
+  height: 50px;
+  font-size: 15px;
+  text-align: right;
+}
+.header__column {
+  position: absolute;
+  background: #3629cb;
+  line-height: 25px;
+  color: #fff;
+}
+.header__column--t25 {
+  top: 25px;
+}
+.header__column--convenio,
+.row--convenio {
+  line-height: 50px;
+  width: 300px;
+  font-size: 30px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.darkBg {
+  background: rgba(0, 0, 0, 0.3);
+}
+.row--redBg {
+  background: rgba(203, 60, 41, 0.3);
+}
+.row--greenBg {
+  background: rgba(68, 190, 10, 0.3);
+}
+.row--pinkBg {
+  background: rgba(203, 41, 123, 0.3);
+}
+.header__column--ge30 {
+  background: #cb3c29;
+  left: 300px;
+  width: 350px;
+}
+.header__column--ge30Title {
+  background: #702016;
+}
+.header__column--ge30Qtd,
+.row--ge30Qtd {
+  left: 300px;
+  width: 100px;
+}
+.header__column--ge30DaysAvg,
+.row--ge30DaysAvg {
+  left: 400px;
+  width: 100px;
+}
+.header__column--ge30ValueAvg,
+.row--ge30ValueAvg {
+  left: 500px;
+  width: 150px;
+}
+.header__column--lt30 {
+  background: #44be0a;
+  left: 650px;
+  width: 350px;
+}
+.header__column--lt30Title {
+  background: #246206;
+}
+.header__column--lt30Qtd,
+.row--lt30Qtd {
+  left: 650px;
+  width: 100px;
+}
+.header__column--lt30DaysAvg,
+.row--lt30DaysAvg {
+  left: 750px;
+  width: 100px;
+}
+.header__column--lt30ValueAvg,
+.row--lt30ValueAvg {
+  left: 850px;
+  width: 150px;
+}
+.header__column--pendentes {
+  background: #cb297b;
+  left: 1000px;
+  width: 200px;
+}
+.header__column--pendentesTitle {
+  background: #791749;
+}
+.header__column--qtdPendentes,
+.row--qtdPendentes {
+  left: 1000px;
+  width: 100px;
+}
+.header__column--avgPendentes,
+.row--avgPendentes {
+  left: 1100px;
+  width: 100px;
+}
+.lPadd {
+  padding-left: 5px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rPadd {
+  padding-right: 5px;
+  text-align: right;
+}
+.content {
+  position: absolute;
+  top: 75px;
+  width: 1200px;
+  height: 600px;
+}
+.row--wrapper {
+  position: absolute;
+  width: 1200px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+}
+.row {
+  position: absolute;
+  height: 50px;
+  line-height: 50px;
+}
+.row--0 {
+  top: 0px;
+}
+.row--1 {
+  top: 50px;
+}
+.row--2 {
+  top: 100px;
+}
+.row--3 {
+  top: 150px;
+}
+.row--4 {
+  top: 200px;
+}
+.row--5 {
+  top: 250px;
+}
+.row--6 {
+  top: 300px;
+}
+.row--7 {
+  top: 350px;
+}
+.row--8 {
+  top: 400px;
+}
+.row--9 {
+  top: 450px;
+}
+.row--10 {
+  top: 500px;
+}
+.row--11 {
+  top: 550px;
+}
+.row--12 {
+  top: 600px;
+}
+.row--13 {
+  top: 650px;
+}
+.row--14 {
+  top: 700px;
+}
+.row--15 {
+  top: 750px;
+}
+.row--16 {
+  top: 800px;
+}
+.row--17 {
+  top: 850px;
+}
+.row--18 {
+  top: 900px;
+}
+.row--19 {
+  top: 950px;
+}
+.row--20 {
+  top: 1000px;
+}
+.row--zebra {
+  background: rgba(1, 4, 85, 0.5);
+}
