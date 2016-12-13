@@ -169,7 +169,7 @@ public class FaturamentoSrv extends AbstractSrv {
     query = session.createSQLQuery(sqlRemessas);
     result = (List<Object[]>) query.list();
 
-    NumberFormat numberFormat = new DecimalFormat("R$ #,##0.00");
+    NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("pt", "BR"));
 
     for (Object[] obj : result) {
       String grupoKey = (String) obj[0];
@@ -200,11 +200,11 @@ public class FaturamentoSrv extends AbstractSrv {
       if (status.equals("LT30")) {
         item.setLt30(qtd);
         item.setLt30Avg(mediaDias);
-        item.setLt30ValueAvg(numberFormat.format(mediaValor));
+        item.setLt30ValueAvg("R$ " + numberFormat.format(mediaValor));
       } else {
         item.setGe30(qtd);
         item.setGe30Avg(mediaDias);
-        item.setGe30ValueAvg(numberFormat.format(mediaValor));
+        item.setGe30ValueAvg("R$ " + numberFormat.format(mediaValor));
       }
     }
 

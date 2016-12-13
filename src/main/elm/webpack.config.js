@@ -2,7 +2,7 @@ var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-console.log("WEBPACK GOOOOO!");
+console.log("\u001b[31mWEBPACK GOOOOO!\u001b[39m\n");
 
 var TARGET_ENV = process.env.npm_lifecycle_event === 'build' ? 'production' : 'development';
 
@@ -64,7 +64,7 @@ if (TARGET_ENV === 'development') {
 
 if (TARGET_ENV === 'production') {
 
-  console.log('Building for production...');
+  console.log('Building for \u001b[33mproduction...\u001b[39m');
 
   module.exports = {
 

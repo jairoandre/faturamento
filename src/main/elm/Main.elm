@@ -11,6 +11,7 @@ import View.Faturamento exposing (..)
 import Model.TempoMedio exposing (..)
 import Model.SemRemessa exposing (..)
 import Model.Faturamento exposing (..)
+import Model.Paciente exposing (..)
 import Model.Utils exposing (tickTimer, tickScrollableBag)
 import Api exposing (getTempoMedio, getSemRemessa, getFaturamento)
 import Navigation
@@ -38,6 +39,7 @@ type alias Model =
     , tempoMedio : Maybe SetorTempoMedio
     , semRemessa : Maybe SemRemessa
     , faturamento : Maybe Faturamento
+    , paciente : Maybe Paciente
     , scale : Float
     , size : Window.Size
     , tick : Int
@@ -59,6 +61,7 @@ type Msg
     | FetchSuccessTempoMedio SetorTempoMedio
     | FetchSuccessSemRemessa SemRemessa
     | FetchSuccessFaturamento Faturamento
+    | FetchSuccessPaciente Paciente
 
 
 init : Result String Page -> ( Model, Cmd Msg )
@@ -67,7 +70,7 @@ init result =
         t =
             Debug.log (toString result) 0
     in
-        urlUpdate result (Model Home Nothing Nothing Nothing 1 { width = 0, height = 0 } 0 0)
+        urlUpdate result (Model Home Nothing Nothing Nothing Nothing 1 { width = 0, height = 0 } 0 0)
 
 
 urlUpdate : Result String Page -> Model -> ( Model, Cmd Msg )
@@ -250,6 +253,9 @@ update message model =
 
         FetchSuccessFaturamento faturamento ->
             ( { model | faturamento = Just faturamento, refreshCount = 300 }, Cmd.none )
+
+        FetchSuccessPaciente paciente ->
+            ( { model | paciente = Just paciente }, Cmd.none )
 
 
 setScale : Page -> Cmd Msg

@@ -2,6 +2,7 @@ package br.com.vah.faturamento.rest;
 
 import br.com.vah.faturamento.dto.*;
 import br.com.vah.faturamento.services.FaturamentoSrv;
+import br.com.vah.faturamento.services.PacienteSrv;
 import br.com.vah.faturamento.services.SemRemessaSrv;
 import br.com.vah.faturamento.services.TempoMedioSrv;
 
@@ -27,6 +28,9 @@ public class MainSrv {
 
   private @Inject
   FaturamentoSrv faturamentoSrv;
+
+  private @Inject
+  PacienteSrv pacienteSrv;
 
   @GET
   @Path("/tempoMedio")
@@ -62,5 +66,17 @@ public class MainSrv {
     List<FaturamentoGrupo> items = faturamentoSrv.recuperarPainel();
     faturamento.setItems(items);
     return faturamento;
+  }
+
+  @GET
+  @Path("/pacientes")
+  @Produces("application/json")
+  public Paciente paciente() {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    Paciente paciente = new Paciente();
+    paciente.setDate(sdf.format(new Date()));
+    List<PacienteItem> items = pacienteSrv.pacientes();
+    paciente.setItems(items);
+    return paciente;
   }
 }

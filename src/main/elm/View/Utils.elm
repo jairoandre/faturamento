@@ -20,3 +20,23 @@ divLeftPadding wrapperClass elem =
 divRightPadding : String -> Html a -> Html a
 divRightPadding wrapperClass elem =
     customDiv wrapperClass "rPadd" elem
+
+
+updateCountdownText : Int -> String
+updateCountdownText rCount =
+    if rCount < 0 then
+        "Carregando..."
+    else
+        "Próxima atualização em " ++ (toString rCount) ++ "s."
+
+
+rowClass : Int -> String
+rowClass idx =
+    let
+        topClass =
+            "row--" ++ (toString idx)
+    in
+        if idx % 2 == 0 then
+            "row--wrapper row--zebra " ++ topClass
+        else
+            "row--wrapper " ++ topClass
