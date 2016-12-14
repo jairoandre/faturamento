@@ -9,6 +9,7 @@ type alias Faturamento =
     , version : String
     , items : List FaturamentoGrupo
     , index : Int
+    , cycles : Int
     }
 
 
@@ -18,6 +19,7 @@ faturamentoDecoder =
         |> optional "date" string ""
         |> optional "version" string ""
         |> optional "items" (list faturamentoGrupoDecoder) []
+        |> hardcoded 0
         |> hardcoded 0
 
 

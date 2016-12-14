@@ -16,6 +16,7 @@ type alias ScrollableBag a b c =
     { a
         | items : List (Scrollable b c)
         , index : Int
+        , cycles : Int
     }
 
 
@@ -54,8 +55,17 @@ tickScrollableBag obj maxTimer maxItems =
                             obj.index
                         else
                             (obj.index + 1) % itemsLength
+
+                    newCycles =
+                        if newIndex == 0 then
+                            if obj.index > 0 then
+                                obj.cycles + 1
+                            else
+                                obj.cycles
+                        else
+                            obj.cycles
                 in
-                    { obj | items = newItems, index = newIndex }
+                    { obj | items = newItems, index = newIndex, cycles = newCycles }
 
             Nothing ->
                 obj

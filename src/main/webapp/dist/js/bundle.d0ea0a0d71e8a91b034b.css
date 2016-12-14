@@ -241,3 +241,39 @@ body {
 .row--zebra {
   background: rgba(1, 4, 85, 0.5);
 }
+.header__column--paciente {
+  line-height: 50px;
+  font-size: 25px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header__column--paciente--convenio,
+.row--paciente--convenio {
+  width: 300px;
+}
+.header__column--paciente--nome,
+.row--paciente--nome {
+  left: 300px;
+  width: 350px;
+}
+.header__column--paciente--atendimento,
+.row--paciente--atendimento {
+  left: 650px;
+  width: 125px;
+}
+.header__column--paciente--conta,
+.row--paciente--conta {
+  left: 775px;
+  width: 125px;
+}
+.header__column--paciente--dias,
+.row--paciente--dias {
+  left: 900px;
+  width: 100px;
+}
+.header__column--paciente--valorTotal,
+.row--paciente--valorTotal {
+  left: 1000px;
+  width: 200px;
+}

@@ -9580,9 +9580,9 @@
 					}));
 		});
 
-	var _user$project$Model_TempoMedio$SetorTempoMedio = F4(
-		function (a, b, c, d) {
-			return {date: a, version: b, items: c, index: d};
+	var _user$project$Model_TempoMedio$SetorTempoMedio = F5(
+		function (a, b, c, d, e) {
+			return {date: a, version: b, items: c, index: d, cycles: e};
 		});
 	var _user$project$Model_TempoMedio$TempoMedio = F5(
 		function (a, b, c, d, e) {
@@ -9632,23 +9632,26 @@
 	var _user$project$Model_TempoMedio$setorTempoMedioDecoder = A2(
 		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
 		0,
-		A4(
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-			'items',
-			_elm_lang$core$Json_Decode$list(_user$project$Model_TempoMedio$tempoMedioDecoder),
-			_elm_lang$core$Native_List.fromArray(
-				[]),
+		A2(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+			0,
 			A4(
 				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-				'version',
-				_elm_lang$core$Json_Decode$string,
-				'',
+				'items',
+				_elm_lang$core$Json_Decode$list(_user$project$Model_TempoMedio$tempoMedioDecoder),
+				_elm_lang$core$Native_List.fromArray(
+					[]),
 				A4(
 					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-					'date',
+					'version',
 					_elm_lang$core$Json_Decode$string,
 					'',
-					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_TempoMedio$SetorTempoMedio)))));
+					A4(
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+						'date',
+						_elm_lang$core$Json_Decode$string,
+						'',
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_TempoMedio$SetorTempoMedio))))));
 
 	var _user$project$Model_SemRemessa$SemRemessa = F6(
 		function (a, b, c, d, e, f) {
@@ -9711,9 +9714,9 @@
 							'',
 							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_SemRemessa$SemRemessa)))))));
 
-	var _user$project$Model_Faturamento$Faturamento = F4(
-		function (a, b, c, d) {
-			return {date: a, version: b, items: c, index: d};
+	var _user$project$Model_Faturamento$Faturamento = F5(
+		function (a, b, c, d, e) {
+			return {date: a, version: b, items: c, index: d, cycles: e};
 		});
 	var _user$project$Model_Faturamento$FaturamentoGrupo = F5(
 		function (a, b, c, d, e) {
@@ -9793,23 +9796,92 @@
 	var _user$project$Model_Faturamento$faturamentoDecoder = A2(
 		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
 		0,
-		A4(
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-			'items',
-			_elm_lang$core$Json_Decode$list(_user$project$Model_Faturamento$faturamentoGrupoDecoder),
-			_elm_lang$core$Native_List.fromArray(
-				[]),
+		A2(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+			0,
 			A4(
 				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-				'version',
+				'items',
+				_elm_lang$core$Json_Decode$list(_user$project$Model_Faturamento$faturamentoGrupoDecoder),
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				A4(
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+					'version',
+					_elm_lang$core$Json_Decode$string,
+					'',
+					A4(
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+						'date',
+						_elm_lang$core$Json_Decode$string,
+						'',
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_Faturamento$Faturamento))))));
+
+	var _user$project$Model_Paciente$Paciente = F6(
+		function (a, b, c, d, e, f) {
+			return {date: a, version: b, items: c, page: d, timer: e, cycles: f};
+		});
+	var _user$project$Model_Paciente$PacienteItem = F6(
+		function (a, b, c, d, e, f) {
+			return {nome: a, atendimento: b, conta: c, convenio: d, dias: e, valorTotal: f};
+		});
+	var _user$project$Model_Paciente$pacienteItemDecoder = A4(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+		'valorTotal',
+		_elm_lang$core$Json_Decode$string,
+		'R$ 0,00',
+		A4(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+			'dias',
+			_elm_lang$core$Json_Decode$int,
+			0,
+			A4(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+				'convenio',
 				_elm_lang$core$Json_Decode$string,
 				'',
 				A4(
 					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-					'date',
-					_elm_lang$core$Json_Decode$string,
-					'',
-					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_Faturamento$Faturamento)))));
+					'conta',
+					_elm_lang$core$Json_Decode$int,
+					0,
+					A4(
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+						'atendimento',
+						_elm_lang$core$Json_Decode$int,
+						0,
+						A4(
+							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+							'nome',
+							_elm_lang$core$Json_Decode$string,
+							'',
+							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_Paciente$PacienteItem)))))));
+	var _user$project$Model_Paciente$pacienteDecoder = A2(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+		0,
+		A2(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+			0,
+			A2(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+				0,
+				A4(
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+					'items',
+					_elm_lang$core$Json_Decode$list(_user$project$Model_Paciente$pacienteItemDecoder),
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					A4(
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+						'version',
+						_elm_lang$core$Json_Decode$string,
+						'',
+						A4(
+							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+							'date',
+							_elm_lang$core$Json_Decode$string,
+							'',
+							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Model_Paciente$Paciente)))))));
 
 	var _user$project$Api$apiHost = false ? 'http://10.1.8.118:8080/faturamento/' : '';
 	var _user$project$Api$getTempoMedio = F2(
@@ -9845,7 +9917,36 @@
 					_user$project$Model_Faturamento$faturamentoDecoder,
 					A2(_elm_lang$core$Basics_ops['++'], _user$project$Api$apiHost, 'rest/api/faturamento')));
 		});
+	var _user$project$Api$getPacientes = F2(
+		function (error, success) {
+			return A3(
+				_elm_lang$core$Task$perform,
+				error,
+				success,
+				A2(
+					_evancz$elm_http$Http$get,
+					_user$project$Model_Paciente$pacienteDecoder,
+					A2(_elm_lang$core$Basics_ops['++'], _user$project$Api$apiHost, 'rest/api/pacientes')));
+		});
 
+	var _user$project$View_Utils$rowClass = function (idx) {
+		var topClass = A2(
+			_elm_lang$core$Basics_ops['++'],
+			'row--',
+			_elm_lang$core$Basics$toString(idx));
+		return _elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], idx, 2),
+			0) ? A2(_elm_lang$core$Basics_ops['++'], 'row--wrapper row--zebra ', topClass) : A2(_elm_lang$core$Basics_ops['++'], 'row--wrapper ', topClass);
+	};
+	var _user$project$View_Utils$updateCountdownText = function (rCount) {
+		return (_elm_lang$core$Native_Utils.cmp(rCount, 0) < 0) ? 'Carregando...' : A2(
+			_elm_lang$core$Basics_ops['++'],
+			'Próxima atualização em ',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(rCount),
+				's.'));
+	};
 	var _user$project$View_Utils$customDiv = F3(
 		function (wrapperClass, innerClass, elem) {
 			return A2(
@@ -10450,6 +10551,133 @@
 			}
 		});
 
+	var _user$project$View_Paciente$pacienteItemToHtml = F2(
+		function (idx, item) {
+			var valorTotal = A2(
+				_user$project$View_Utils$divRightPadding,
+				'row row--paciente--valorTotal',
+				_elm_lang$html$Html$text(item.valorTotal));
+			var dias = A2(
+				_user$project$View_Utils$divRightPadding,
+				'row row--paciente--dias',
+				_elm_lang$html$Html$text(
+					_elm_lang$core$Basics$toString(item.dias)));
+			var conta = A2(
+				_user$project$View_Utils$divRightPadding,
+				'row row--paciente--conta',
+				_elm_lang$html$Html$text(
+					_elm_lang$core$Basics$toString(item.conta)));
+			var atendimento = A2(
+				_user$project$View_Utils$divRightPadding,
+				'row row--paciente--atendimento',
+				_elm_lang$html$Html$text(
+					_elm_lang$core$Basics$toString(item.atendimento)));
+			var paciente = A2(
+				_user$project$View_Utils$divLeftPadding,
+				'row row--paciente--nome',
+				_elm_lang$html$Html$text(item.nome));
+			var convenio = A2(
+				_user$project$View_Utils$divLeftPadding,
+				'row row--paciente--convenio',
+				_elm_lang$html$Html$text(item.convenio));
+			return A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class(
+						_user$project$View_Utils$rowClass(idx))
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[convenio, paciente, atendimento, conta, dias, valorTotal]));
+		});
+	var _user$project$View_Paciente$pacienteToHtml = F2(
+		function (p, rCount) {
+			var items = A2(_elm_lang$core$List$drop, p.page * 10, p.items);
+			var rows = A2(
+				_elm_lang$core$List$indexedMap,
+				_user$project$View_Paciente$pacienteItemToHtml,
+				A2(_elm_lang$core$List$take, 10, items));
+			return A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('list')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('header')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								A2(
+								_elm_lang$html$Html$div,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('header__title')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html$text('PACIENTES COM CONTAS ABERTAS A MAIS DE 60 DIAS'),
+										A2(
+										_elm_lang$html$Html$div,
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html_Attributes$class('rCount')
+											]),
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html$text(
+												_user$project$View_Utils$updateCountdownText(rCount))
+											]))
+									])),
+								A2(
+								_elm_lang$html$Html$div,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('header__columns')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										A2(
+										_user$project$View_Utils$divLeftPadding,
+										'header__column header__column--paciente header__column--paciente--convenio',
+										_elm_lang$html$Html$text('CONVÊNIO')),
+										A2(
+										_user$project$View_Utils$divLeftPadding,
+										'header__column header__column--paciente header__column--paciente--nome',
+										_elm_lang$html$Html$text('PACIENTE')),
+										A2(
+										_user$project$View_Utils$divRightPadding,
+										'header__column header__column--paciente header__column--paciente--atendimento',
+										_elm_lang$html$Html$text('ATEND.')),
+										A2(
+										_user$project$View_Utils$divRightPadding,
+										'header__column header__column--paciente header__column--paciente--conta',
+										_elm_lang$html$Html$text('CONTA')),
+										A2(
+										_user$project$View_Utils$divRightPadding,
+										'header__column header__column--paciente header__column--paciente--dias',
+										_elm_lang$html$Html$text('DIAS')),
+										A2(
+										_user$project$View_Utils$divRightPadding,
+										'header__column header__column--paciente header__column--paciente--valorTotal',
+										_elm_lang$html$Html$text('VALOR TOTAL'))
+									]))
+							])),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('content')
+							]),
+						rows)
+					]));
+		});
+
 	var _user$project$Model_Utils$tickTimer = F3(
 		function (obj, maxTimer, maxItems) {
 			if (_elm_lang$core$Native_Utils.cmp(obj.timer, maxTimer) > -1) {
@@ -10488,9 +10716,10 @@
 						itemsTail));
 				var currItemCycles = _p2.cycles;
 				var newIndex = _elm_lang$core$Native_Utils.eq(currItemCycles, afterItemCycles) ? obj.index : A2(_elm_lang$core$Basics_ops['%'], obj.index + 1, itemsLength);
+				var newCycles = _elm_lang$core$Native_Utils.eq(newIndex, 0) ? ((_elm_lang$core$Native_Utils.cmp(obj.index, 0) > 0) ? (obj.cycles + 1) : obj.cycles) : obj.cycles;
 				return _elm_lang$core$Native_Utils.update(
 					obj,
-					{items: newItems, index: newIndex});
+					{items: newItems, index: newIndex, cycles: newCycles});
 			} else {
 				return obj;
 			}
@@ -10521,35 +10750,52 @@
 								_elm_lang$core$Basics$toString(2 - model.tick),
 								'...')));
 				case 'FaturamentoView':
-					var faturamento = function () {
-						var _p1 = model.faturamento;
-						if (_p1.ctor === 'Nothing') {
-							return _elm_lang$html$Html$text('Carregando...');
-						} else {
-							return A2(_user$project$View_Faturamento$faturamentoHtml, _p1._0, model.refreshCount);
-						}
-					}();
-					return A2(
-						_elm_lang$html$Html$div,
-						_elm_lang$core$Native_List.fromArray(
-							[]),
-						_elm_lang$core$Native_List.fromArray(
-							[faturamento]));
+					if (model.showFaturamento) {
+						var faturamento = function () {
+							var _p1 = model.faturamento;
+							if (_p1.ctor === 'Nothing') {
+								return _elm_lang$html$Html$text('Carregando...');
+							} else {
+								return A2(_user$project$View_Faturamento$faturamentoHtml, _p1._0, model.refreshCount);
+							}
+						}();
+						return A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[]),
+							_elm_lang$core$Native_List.fromArray(
+								[faturamento]));
+					} else {
+						var paciente = function () {
+							var _p2 = model.paciente;
+							if (_p2.ctor === 'Nothing') {
+								return _elm_lang$html$Html$text('Carregando...');
+							} else {
+								return A2(_user$project$View_Paciente$pacienteToHtml, _p2._0, model.refreshCount);
+							}
+						}();
+						return A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[]),
+							_elm_lang$core$Native_List.fromArray(
+								[paciente]));
+					}
 				default:
 					var semRemessa = function () {
-						var _p2 = model.semRemessa;
-						if (_p2.ctor === 'Nothing') {
-							return _elm_lang$html$Html$text('Carregando...');
-						} else {
-							return _user$project$View_SemRemessa$semRemessaToHtml(_p2._0);
-						}
-					}();
-					var tempoMedio = function () {
-						var _p3 = model.tempoMedio;
+						var _p3 = model.semRemessa;
 						if (_p3.ctor === 'Nothing') {
 							return _elm_lang$html$Html$text('Carregando...');
 						} else {
-							return _user$project$View_TempoMedio$setorTempoMedioToHtml(_p3._0);
+							return _user$project$View_SemRemessa$semRemessaToHtml(_p3._0);
+						}
+					}();
+					var tempoMedio = function () {
+						var _p4 = model.tempoMedio;
+						if (_p4.ctor === 'Nothing') {
+							return _elm_lang$html$Html$text('Carregando...');
+						} else {
+							return _user$project$View_TempoMedio$setorTempoMedioToHtml(_p4._0);
 						}
 					}();
 					var elems = _elm_lang$core$Native_List.fromArray(
@@ -10586,8 +10832,8 @@
 				[content]));
 	};
 	var _user$project$Main$toUrl = function (page) {
-		var _p4 = page;
-		switch (_p4.ctor) {
+		var _p5 = page;
+		switch (_p5.ctor) {
 			case 'Home':
 				return '#home';
 			case 'FaturamentoView':
@@ -10596,10 +10842,27 @@
 				return '#porSetor';
 		}
 	};
-	var _user$project$Main$Model = F8(
-		function (a, b, c, d, e, f, g, h) {
-			return {page: a, tempoMedio: b, semRemessa: c, faturamento: d, scale: e, size: f, tick: g, refreshCount: h};
-		});
+	var _user$project$Main$Model = function (a) {
+		return function (b) {
+			return function (c) {
+				return function (d) {
+					return function (e) {
+						return function (f) {
+							return function (g) {
+								return function (h) {
+									return function (i) {
+										return function (j) {
+											return {page: a, tempoMedio: b, semRemessa: c, faturamento: d, paciente: e, scale: f, size: g, tick: h, refreshCount: i, showFaturamento: j};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
 	var _user$project$Main$PorSetorView = {ctor: 'PorSetorView'};
 	var _user$project$Main$FaturamentoView = {ctor: 'FaturamentoView'};
 	var _user$project$Main$Home = {ctor: 'Home'};
@@ -10627,6 +10890,9 @@
 		var page = A2(_elm_lang$core$String$dropLeft, 1, location.hash);
 		return A3(_evancz$url_parser$UrlParser$parse, _elm_lang$core$Basics$identity, _user$project$Main$pageParser, page);
 	};
+	var _user$project$Main$FetchSuccessPaciente = function (a) {
+		return {ctor: 'FetchSuccessPaciente', _0: a};
+	};
 	var _user$project$Main$FetchSuccessFaturamento = function (a) {
 		return {ctor: 'FetchSuccessFaturamento', _0: a};
 	};
@@ -10642,32 +10908,45 @@
 	var _user$project$Main$fetchTempoMedio = A2(_user$project$Api$getTempoMedio, _user$project$Main$FetchFail, _user$project$Main$FetchSuccessTempoMedio);
 	var _user$project$Main$fetchSemRemessa = A2(_user$project$Api$getSemRemessa, _user$project$Main$FetchFail, _user$project$Main$FetchSuccessSemRemessa);
 	var _user$project$Main$fetchFaturamento = A2(_user$project$Api$getFaturamento, _user$project$Main$FetchFail, _user$project$Main$FetchSuccessFaturamento);
+	var _user$project$Main$fetchPacientes = A2(_user$project$Api$getPacientes, _user$project$Main$FetchFail, _user$project$Main$FetchSuccessPaciente);
 	var _user$project$Main$update = F2(
 		function (message, model) {
-			var _p5 = message;
-			switch (_p5.ctor) {
+			var _p6 = message;
+			switch (_p6.ctor) {
 				case 'Resize':
-					var _p7 = _p5._1;
-					var _p6 = _p5._0;
-					switch (_p6.ctor) {
+					var _p8 = _p6._1;
+					var _p7 = _p6._0;
+					switch (_p7.ctor) {
 						case 'Home':
-							return A3(_user$project$Main$resizeCmd, model, _p7, _elm_lang$core$Platform_Cmd$none);
+							return A3(_user$project$Main$resizeCmd, model, _p8, _elm_lang$core$Platform_Cmd$none);
 						case 'FaturamentoView':
-							return A3(_user$project$Main$resizeCmd, model, _p7, _user$project$Main$fetchFaturamento);
+							return A3(
+								_user$project$Main$resizeCmd,
+								model,
+								_p8,
+								_elm_lang$core$Platform_Cmd$batch(
+									_elm_lang$core$Native_List.fromArray(
+										[_user$project$Main$fetchFaturamento, _user$project$Main$fetchPacientes])));
 						default:
 							return A3(
 								_user$project$Main$resizeCmd,
 								model,
-								_p7,
+								_p8,
 								_elm_lang$core$Platform_Cmd$batch(
 									_elm_lang$core$Native_List.fromArray(
 										[_user$project$Main$fetchSemRemessa, _user$project$Main$fetchTempoMedio])));
 					}
 				case 'Refresh':
-					return {ctor: '_Tuple2', _0: model, _1: _user$project$Main$fetchFaturamento};
+					return {
+						ctor: '_Tuple2',
+						_0: model,
+						_1: _elm_lang$core$Platform_Cmd$batch(
+							_elm_lang$core$Native_List.fromArray(
+								[_user$project$Main$fetchFaturamento, _user$project$Main$fetchPacientes]))
+					};
 				case 'TickTime':
-					var _p8 = model.page;
-					switch (_p8.ctor) {
+					var _p9 = model.page;
+					switch (_p9.ctor) {
 						case 'Home':
 							return (_elm_lang$core$Native_Utils.cmp(model.tick, 2) < 0) ? {
 								ctor: '_Tuple2',
@@ -10684,37 +10963,70 @@
 									_user$project$Main$toUrl(_user$project$Main$FaturamentoView))
 							};
 						case 'FaturamentoView':
-							var newFaturamento = function () {
-								var _p9 = model.faturamento;
-								if (_p9.ctor === 'Just') {
-									return _elm_lang$core$Maybe$Just(
-										A3(_user$project$Model_Utils$tickScrollableBag, _p9._0, 20, 10));
-								} else {
-									return _elm_lang$core$Maybe$Nothing;
-								}
-							}();
-							return {
-								ctor: '_Tuple2',
-								_0: _elm_lang$core$Native_Utils.update(
-									model,
-									{faturamento: newFaturamento, refreshCount: model.refreshCount - 1}),
-								_1: _elm_lang$core$Platform_Cmd$none
-							};
+							if (model.showFaturamento) {
+								var _p10 = function () {
+									var _p11 = model.faturamento;
+									if (_p11.ctor === 'Just') {
+										var _p12 = _p11._0;
+										var tickedFaturamento = A3(_user$project$Model_Utils$tickScrollableBag, _p12, 20, 10);
+										return {
+											ctor: '_Tuple2',
+											_0: _elm_lang$core$Maybe$Just(tickedFaturamento),
+											_1: _elm_lang$core$Native_Utils.eq(tickedFaturamento.cycles, _p12.cycles)
+										};
+									} else {
+										return {ctor: '_Tuple2', _0: _elm_lang$core$Maybe$Nothing, _1: model.showFaturamento};
+									}
+								}();
+								var newFaturamento = _p10._0;
+								var showFaturamento = _p10._1;
+								return {
+									ctor: '_Tuple2',
+									_0: _elm_lang$core$Native_Utils.update(
+										model,
+										{faturamento: newFaturamento, refreshCount: model.refreshCount - 1, showFaturamento: showFaturamento}),
+									_1: _elm_lang$core$Platform_Cmd$none
+								};
+							} else {
+								var _p13 = function () {
+									var _p14 = model.paciente;
+									if (_p14.ctor === 'Just') {
+										var _p15 = _p14._0;
+										var newPaciente = A3(_user$project$Model_Utils$tickTimer, _p15, 20, 10);
+										return {
+											ctor: '_Tuple2',
+											_0: _elm_lang$core$Maybe$Just(newPaciente),
+											_1: !_elm_lang$core$Native_Utils.eq(newPaciente.cycles, _p15.cycles)
+										};
+									} else {
+										return {ctor: '_Tuple2', _0: _elm_lang$core$Maybe$Nothing, _1: model.showFaturamento};
+									}
+								}();
+								var paciente = _p13._0;
+								var showFaturamento = _p13._1;
+								return {
+									ctor: '_Tuple2',
+									_0: _elm_lang$core$Native_Utils.update(
+										model,
+										{paciente: paciente, showFaturamento: showFaturamento, refreshCount: model.refreshCount - 1}),
+									_1: _elm_lang$core$Platform_Cmd$none
+								};
+							}
 						default:
 							var newTempoMedio = function () {
-								var _p10 = model.tempoMedio;
-								if (_p10.ctor === 'Just') {
+								var _p16 = model.tempoMedio;
+								if (_p16.ctor === 'Just') {
 									return _elm_lang$core$Maybe$Just(
-										A3(_user$project$Model_Utils$tickScrollableBag, _p10._0, 20, 20));
+										A3(_user$project$Model_Utils$tickScrollableBag, _p16._0, 20, 20));
 								} else {
 									return _elm_lang$core$Maybe$Nothing;
 								}
 							}();
 							var newSemRemessa = function () {
-								var _p11 = model.semRemessa;
-								if (_p11.ctor === 'Just') {
+								var _p17 = model.semRemessa;
+								if (_p17.ctor === 'Just') {
 									return _elm_lang$core$Maybe$Just(
-										A3(_user$project$Model_Utils$tickTimer, _p11._0, 20, 20));
+										A3(_user$project$Model_Utils$tickTimer, _p17._0, 20, 20));
 								} else {
 									return _elm_lang$core$Maybe$Nothing;
 								}
@@ -10730,7 +11042,7 @@
 				case 'FetchFail':
 					var t = A2(
 						_elm_lang$core$Debug$log,
-						_elm_lang$core$Basics$toString(_p5._0),
+						_elm_lang$core$Basics$toString(_p6._0),
 						0);
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				case 'FetchSuccessTempoMedio':
@@ -10739,7 +11051,7 @@
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								tempoMedio: _elm_lang$core$Maybe$Just(_p5._0)
+								tempoMedio: _elm_lang$core$Maybe$Just(_p6._0)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -10749,7 +11061,18 @@
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								semRemessa: _elm_lang$core$Maybe$Just(_p5._0)
+								semRemessa: _elm_lang$core$Maybe$Just(_p6._0)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				case 'FetchSuccessFaturamento':
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								faturamento: _elm_lang$core$Maybe$Just(_p6._0),
+								refreshCount: 300
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -10759,8 +11082,7 @@
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								faturamento: _elm_lang$core$Maybe$Just(_p5._0),
-								refreshCount: 300
+								paciente: _elm_lang$core$Maybe$Just(_p6._0)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -10779,12 +11101,12 @@
 	var _user$project$Main$setScale = function (page) {
 		return A3(
 			_elm_lang$core$Task$perform,
-			function (_p12) {
+			function (_p18) {
 				return _elm_lang$core$Native_Utils.crash(
 					'Main',
 					{
-						start: {line: 257, column: 25},
-						end: {line: 257, column: 36}
+						start: {line: 309, column: 25},
+						end: {line: 309, column: 36}
 					})('Oopss!!!');
 			},
 			_user$project$Main$Resize(page),
@@ -10792,8 +11114,8 @@
 	};
 	var _user$project$Main$urlUpdate = F2(
 		function (result, model) {
-			var _p13 = result;
-			if (_p13.ctor === 'Err') {
+			var _p19 = result;
+			if (_p19.ctor === 'Err') {
 				return {
 					ctor: '_Tuple2',
 					_0: model,
@@ -10801,7 +11123,7 @@
 						_user$project$Main$toUrl(model.page))
 				};
 			} else {
-				switch (_p13._0.ctor) {
+				switch (_p19._0.ctor) {
 					case 'Home':
 						return {
 							ctor: '_Tuple2',
@@ -10837,16 +11159,8 @@
 		return A2(
 			_user$project$Main$urlUpdate,
 			result,
-			A8(
-				_user$project$Main$Model,
-				_user$project$Main$Home,
-				_elm_lang$core$Maybe$Nothing,
-				_elm_lang$core$Maybe$Nothing,
-				_elm_lang$core$Maybe$Nothing,
-				1,
-				{width: 0, height: 0},
-				0,
-				0));
+			_user$project$Main$Model(_user$project$Main$Home)(_elm_lang$core$Maybe$Nothing)(_elm_lang$core$Maybe$Nothing)(_elm_lang$core$Maybe$Nothing)(_elm_lang$core$Maybe$Nothing)(1)(
+				{width: 0, height: 0})(0)(0)(true));
 	};
 	var _user$project$Main$subscriptions = function (model) {
 		return _elm_lang$core$Platform_Sub$batch(

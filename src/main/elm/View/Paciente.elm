@@ -22,12 +22,12 @@ pacienteToHtml p rCount =
                     , div [ class "rCount" ] [ text <| updateCountdownText rCount ]
                     ]
                 , div [ class "header__columns" ]
-                    [ divLeftPadding "header__column header__column--paciente--convenio" <| text "CONVÊNIO"
-                    , divLeftPadding "header__column header__column--paciente--nome" <| text "NOME"
-                    , divRightPadding "header__column header__column--paciente--atendimento" <| text "ATENDIMENTO"
-                    , divRightPadding "header__column header__column--paciente--conta" <| text "CONTA"
-                    , divRightPadding "header__column header__column--paciente--dias" <| text "DIAS"
-                    , divRightPadding "header__column header__column--paciente--valorTotal" <| text "VALOR TOTAL"
+                    [ divLeftPadding "header__column header__column--paciente header__column--paciente--convenio" <| text "CONVÊNIO"
+                    , divLeftPadding "header__column header__column--paciente header__column--paciente--nome" <| text "PACIENTE"
+                    , divRightPadding "header__column header__column--paciente header__column--paciente--atendimento" <| text "ATEND."
+                    , divRightPadding "header__column header__column--paciente header__column--paciente--conta" <| text "CONTA"
+                    , divRightPadding "header__column header__column--paciente header__column--paciente--dias" <| text "DIAS"
+                    , divRightPadding "header__column header__column--paciente header__column--paciente--valorTotal" <| text "VALOR TOTAL"
                     ]
                 ]
             , div [ class "content" ]

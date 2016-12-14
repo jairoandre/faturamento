@@ -8,12 +8,13 @@ import Window exposing (Size)
 import View.TempoMedio exposing (..)
 import View.SemRemessa exposing (..)
 import View.Faturamento exposing (..)
+import View.Paciente exposing (..)
 import Model.TempoMedio exposing (..)
 import Model.SemRemessa exposing (..)
 import Model.Faturamento exposing (..)
 import Model.Paciente exposing (..)
 import Model.Utils exposing (tickTimer, tickScrollableBag)
-import Api exposing (getTempoMedio, getSemRemessa, getFaturamento)
+import Api exposing (getTempoMedio, getSemRemessa, getFaturamento, getPacientes)
 import Navigation
 import String
 import Window
@@ -44,6 +45,7 @@ type alias Model =
     , size : Window.Size
     , tick : Int
     , refreshCount : Int
+    , showFaturamento : Bool
     }
 
 
@@ -70,7 +72,7 @@ init result =
         t =
             Debug.log (toString result) 0
     in
-        urlUpdate result (Model Home Nothing Nothing Nothing Nothing 1 { width = 0, height = 0 } 0 0)
+        urlUpdate result (Model Home Nothing Nothing Nothing Nothing 1 { width = 0, height = 0 } 0 0 True)
 
 
 urlUpdate : Result String Page -> Model -> ( Model, Cmd Msg )
@@ -134,16 +136,28 @@ view model =
                     text ("Redirecionando em " ++ (toString (2 - model.tick)) ++ "...")
 
                 FaturamentoView ->
-                    let
-                        faturamento =
-                            case model.faturamento of
-                                Nothing ->
-                                    text "Carregando..."
+                    if model.showFaturamento then
+                        let
+                            faturamento =
+                                case model.faturamento of
+                                    Nothing ->
+                                        text "Carregando..."
 
-                                Just f ->
-                                    faturamentoHtml f model.refreshCount
-                    in
-                        div [] [ faturamento ]
+                                    Just f ->
+                                        faturamentoHtml f model.refreshCount
+                        in
+                            div [] [ faturamento ]
+                    else
+                        let
+                            paciente =
+                                case model.paciente of
+                                    Nothing ->
+                                        text "Carregando..."
+
+                                    Just p ->
+                                        pacienteToHtml p model.refreshCount
+                        in
+                            div [] [ paciente ]
 
                 PorSetorView ->
                     let
@@ -190,13 +204,13 @@ update message model =
                     resizeCmd model newSize Cmd.none
 
                 FaturamentoView ->
-                    resizeCmd model newSize fetchFaturamento
+                    resizeCmd model newSize (Cmd.batch [ fetchFaturamento, fetchPacientes ])
 
                 PorSetorView ->
                     resizeCmd model newSize (Cmd.batch [ fetchSemRemessa, fetchTempoMedio ])
 
         Refresh newTime ->
-            ( model, fetchFaturamento )
+            ( model, Cmd.batch [ fetchFaturamento, fetchPacientes ] )
 
         TickTime newTime ->
             case model.page of
@@ -207,16 +221,48 @@ update message model =
                         ( { model | tick = 0, page = FaturamentoView }, Navigation.newUrl (toUrl FaturamentoView) )
 
                 FaturamentoView ->
-                    let
-                        newFaturamento =
-                            case model.faturamento of
-                                Just faturamento ->
-                                    Just (tickScrollableBag faturamento 20 10)
+                    if model.showFaturamento then
+                        let
+                            ( newFaturamento, showFaturamento ) =
+                                case model.faturamento of
+                                    Just faturamento ->
+                                        let
+                                            tickedFaturamento =
+                                                tickScrollableBag faturamento 20 10
+                                        in
+                                            ( Just tickedFaturamento, tickedFaturamento.cycles == faturamento.cycles )
 
-                                Nothing ->
-                                    Nothing
-                    in
-                        ( { model | faturamento = newFaturamento, refreshCount = model.refreshCount - 1 }, Cmd.none )
+                                    Nothing ->
+                                        ( Nothing, model.showFaturamento )
+                        in
+                            ( { model
+                                | faturamento = newFaturamento
+                                , refreshCount = model.refreshCount - 1
+                                , showFaturamento = showFaturamento
+                              }
+                            , Cmd.none
+                            )
+                    else
+                        let
+                            ( paciente, showFaturamento ) =
+                                case model.paciente of
+                                    Just p ->
+                                        let
+                                            newPaciente =
+                                                tickTimer p 20 10
+                                        in
+                                            ( Just newPaciente, newPaciente.cycles /= p.cycles )
+
+                                    Nothing ->
+                                        ( Nothing, model.showFaturamento )
+                        in
+                            ( { model
+                                | paciente = paciente
+                                , showFaturamento = showFaturamento
+                                , refreshCount = model.refreshCount - 1
+                              }
+                            , Cmd.none
+                            )
 
                 PorSetorView ->
                     let
@@ -302,3 +348,8 @@ fetchSemRemessa =
 fetchFaturamento : Cmd Msg
 fetchFaturamento =
     getFaturamento FetchFail FetchSuccessFaturamento
+
+
+fetchPacientes : Cmd Msg
+fetchPacientes =
+    getPacientes FetchFail FetchSuccessPaciente

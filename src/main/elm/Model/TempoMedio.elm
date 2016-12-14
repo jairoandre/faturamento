@@ -9,6 +9,7 @@ type alias SetorTempoMedio =
     , version : String
     , items : List TempoMedio
     , index : Int
+    , cycles : Int
     }
 
 
@@ -18,6 +19,7 @@ setorTempoMedioDecoder =
         |> optional "date" string ""
         |> optional "version" string ""
         |> optional "items" (list tempoMedioDecoder) []
+        |> hardcoded 0
         |> hardcoded 0
 
 
